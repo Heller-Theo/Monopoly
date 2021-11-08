@@ -22,6 +22,8 @@ int main() {
     int doubleDeSuccessif = 0;
     int carteLiberePrisonChance = 1;
     int carteLiberePrisonCaisse = 1;
+    int nombreMaisonRestante = 32;
+    int nombreHotelRestant = 12;
 
     initialisationMonopoly(plateauMonopoly);
     initialisationJoueur(listeJoueur);
@@ -31,7 +33,7 @@ int main() {
     while (nombreJoueur > 1) {
         for (joueur = 1; joueur <= nombreJoueur; joueur++) {
 
-            if (!checkJeu(plateauMonopoly, listeJoueur)) {
+            if (!checkJeu(plateauMonopoly, listeJoueur, &nombreMaisonRestante, &nombreHotelRestant)) {
                 return 0;
             }
 
@@ -43,8 +45,8 @@ int main() {
             if (listeJoueur[joueur].prison == 0) {
 
                 tirageDeuxDe(&resultatDe, &doubleDe);
-                //scanf("%d",&resultatDe);
-                //scanf("%d", &doubleDe);
+                scanf("%d",&resultatDe);
+                scanf("%d", &doubleDe);
 
                 if (resultatDe + listeJoueur[joueur].caseJoueur >= 40) {
                     if (!regleDepart || resultatDe + listeJoueur[joueur].caseJoueur != 40) {
