@@ -441,9 +441,9 @@ void initialisationPrixMaisonHotel (CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]
     plateauMonopoly[28].prixMaisonHotel[1] = 1000;
 
     //Nombre Maison restante
-    plateauMonopoly[0].prixMaisonHotel[1] = 32;
+    plateauMonopoly[0].prixMaisonHotel[1] = 6942;
     //Nombre Hotel restant
-    plateauMonopoly[0].prixMaisonHotel[2] = 12;
+    plateauMonopoly[0].prixMaisonHotel[2] = 6942;
 
 
 }

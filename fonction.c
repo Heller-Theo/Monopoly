@@ -109,10 +109,10 @@ int monopoleCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeC
     return monopole;
 }
 
-void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
+void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante) {
     int joueur = 0, groupePropriete = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
 
-    if (plateauMonopoly[0].prixMaisonHotel[1] > 0) {
+    if ( *pNombreMaisonRestante > 0) {
 
         printf("Quel joueur veux acheter des maisons ?\n");
         do {
@@ -152,9 +152,9 @@ void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
                 if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[choix].prixMaisonHotel[0]) {
                     listeJoueur[joueur].argentJoueur -= plateauMonopoly[choix].prixMaisonHotel[0];
                     plateauMonopoly[choix].nombreMaison += 1;
-                    plateauMonopoly[0].prixMaisonHotel[1] -= 1;
+                    *pNombreMaisonRestante -= 1;
                     printf("Vous avez maintenant %d maison(s) sur la case %s.\n", plateauMonopoly[choix].nombreMaison, plateauMonopoly[choix].nomCase);
-                    printf("Il reste %d Maison(s) dans le jeu.\n", plateauMonopoly[0].prixMaisonHotel[1]);
+                    printf("Il reste %d Maison(s) dans le jeu.\n", *pNombreMaisonRestante);
                 }
                 else {
                     printf("Vous n'avez pas assez d'argent pour acheter cette maison.\n");
@@ -175,10 +175,10 @@ void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
 
 }
 
-void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
+void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreHotelRestant) {
     int joueur = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
 
-    if (plateauMonopoly[0].prixMaisonHotel[2] > 0) {
+    if ( *pNombreHotelRestant > 0) {
 
         printf("Quel joueur veux acheter des hotels ?\n");
         do {
@@ -211,9 +211,9 @@ void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     listeJoueur[joueur].argentJoueur -= plateauMonopoly[choix].prixMaisonHotel[0];
                     plateauMonopoly[choix].nombreHotel += 1;
                     plateauMonopoly[choix].nombreMaison = 0;
-                    plateauMonopoly[0].prixMaisonHotel[2] -= 1;
+                    *pNombreHotelRestant -= 1;
                     printf("Vous avez maintenant un Hotel sur la case %s.\n", plateauMonopoly[choix].nomCase);
-                    printf("Il reste %d Hotel(s) dans le jeu.\n", plateauMonopoly[0].prixMaisonHotel[2]);
+                    printf("Il reste %d Hotel(s) dans le jeu.\n", *pNombreHotelRestant);
                 }
                 else {
                     printf("Vous n'avez pas assez d'argent pour acheter cet Hotel.\n");
@@ -233,7 +233,7 @@ void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
 }
 
-int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
+int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante, int* pNombreHotelRestant) {
     int verif = 0, choix1 = 0, choix2 = 0;
     do {
         printf("Continuer >");
@@ -284,8 +284,8 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
             } while (choix1 != 0 && choix1 != 1 && choix1 != 2);
 
             if (choix1 != 0) {
-                if (choix1 == 1) {achatMaison(plateauMonopoly, listeJoueur);}
-                if (choix1 == 2) {achatHotel(plateauMonopoly, listeJoueur);}
+                if (choix1 == 1) {achatMaison(plateauMonopoly, listeJoueur, pNombreMaisonRestante);}
+                if (choix1 == 2) {achatHotel(plateauMonopoly, listeJoueur, pNombreHotelRestant);}
             }
         }
 
