@@ -26,4 +26,7 @@ void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 //Fonction sur les cases Chance et Caisse de Communauté
 void randomOrdreCaisseChance(int listeAleatoire[16]);
 
+//Fonction de remise a zero d'une sauvegarde
+void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], CarteChanceCaisse infoChanceCaisse, int listeVariable[NOMBRE_VARIABLE]);
+
 #endif //PROJET_MONOPOLY_FONCTION_H

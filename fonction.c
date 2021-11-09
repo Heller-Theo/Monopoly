@@ -1,6 +1,7 @@
 #include "structure.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "initialisation.h"
 
 
 void affichageInfoCase(int numeroCase, CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
@@ -334,5 +335,22 @@ void randomOrdreCaisseChance(int listeAleatoire[16]) {
         liste[nombreAleatoire-1] = 0;
         listeAleatoire[i] = nombreAleatoire;
     }
+}
+
+void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], CarteChanceCaisse infoChanceCaisse, int listeVariable[NOMBRE_VARIABLE]) {
+    listeVariable[0] = 0;
+    listeVariable[1] = 0;
+    listeVariable[2] = 0;
+    listeVariable[3] = 2;
+    listeVariable[4] = 1;
+    listeVariable[5] = 1;
+    listeVariable[6] = 32;
+    listeVariable[7] = 12;
+    listeVariable[8] = 0;
+    initialisationMonopoly(plateauMonopoly);
+    initialisationJoueur(listeJoueur);
+    initialisationCarteChanceCaisse(&infoChanceCaisse);
+    printf("La sauvegarde a bien ete reinitialise\n");
+    return;
 }
 
