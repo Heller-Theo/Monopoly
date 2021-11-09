@@ -41,21 +41,33 @@ int main() {
         if (choix == 1) {
             printf("Quelle sauvegarde voulez vous lancer ?\n");
             printf("0) Retour\n");
-            printf("1) Sauvegarde 1\n");
-            printf("2) Sauvegarde 2\n");
-            printf("3) Sauvegarde 3\n>");
+            printf("1) Sauvegarde 1:");
+            jeu1 == 0 ? printf(" Empty\n") : printf(" En jeu\n");
+            printf("2) Sauvegarde 2:");
+            jeu2 == 0 ? printf(" Empty\n") : printf(" En jeu\n");
+            printf("3) Sauvegarde 3:");
+            jeu2 == 0 ? printf(" Empty\n>") : printf(" En jeu\n>");
 
             do {
                 scanf(" %d", &choix);
             } while(choix != 0 && choix != 1 && choix != 2 && choix != 3);
 
             if (choix == 1) {
+                if (jeu1 == 0) {
+                    choixRegleSupplementaire(&listeVariable1[0], &listeVariable1[1]);
+                }
                 jeu1 = jeuMonopoly(plateauMonopoly1, listeJoueur1, infoChanceCaisse[0], listeVariable1, jeu1);
             }
             if (choix == 2) {
+                if (jeu2 == 0) {
+                    choixRegleSupplementaire(&listeVariable2[0], &listeVariable2[1]);
+                }
                 jeu2 = jeuMonopoly(plateauMonopoly2, listeJoueur2, infoChanceCaisse[1], listeVariable2, jeu2);
             }
             if (choix == 3) {
+                if (jeu3 == 0) {
+                    choixRegleSupplementaire(&listeVariable3[0], &listeVariable3[1]);
+                }
                 jeu3 = jeuMonopoly(plateauMonopoly3, listeJoueur3, infoChanceCaisse[2], listeVariable3, jeu3);
             }
             choix = 1;
@@ -74,12 +86,15 @@ int main() {
 
             if (choix == 1) {
                 initialisationSauvegarde(plateauMonopoly1, listeJoueur1, infoChanceCaisse[0], listeVariable1);
+                jeu1 = 0;
             }
             if (choix == 2) {
                 initialisationSauvegarde(plateauMonopoly2, listeJoueur2, infoChanceCaisse[1], listeVariable2);
+                jeu2 = 0;
             }
             if (choix == 3) {
                 initialisationSauvegarde(plateauMonopoly3, listeJoueur3, infoChanceCaisse[2], listeVariable3);
+                jeu3 = 0;
             }
             choix = 2;
         }

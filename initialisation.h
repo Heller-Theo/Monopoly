@@ -25,6 +25,7 @@ void initialisationPrixEvenement (CarteChanceCaisse* infoChanceCaisse);
 void initialisationCarteChanceCaisse (CarteChanceCaisse* infoChanceCaisse);
 
 //Affichage et Initialisation des regles
-void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU],int* regleParcGratuit, int* regleDepart);
+void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]);
+void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit);
 
 #endif //PROJET_MONOPOLY_INITIALISATION_H

@@ -241,7 +241,7 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
         scanf("%d",&verif);
 
         if (verif == 0) {
-            printf("Etes vous sur de vouloir quitter le jeu ?\n");
+            printf("Etes vous sur de vouloir quitter la partie ?\n");
             printf("0: Quitter\n");
             printf("1: Rester en jeu\n>");
             do {

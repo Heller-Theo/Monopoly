@@ -552,7 +552,7 @@ void initialisationCarteChanceCaisse (CarteChanceCaisse* pInfoChanceCaisse) {
 }
 
 //Affichage et Initialisation des regles
-void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU],int* regleParcGratuit, int* regleDepart) {
+void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
     int next = 1;
     scanf("%d", &next);
     if (next) {
@@ -574,17 +574,6 @@ void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU],int* regleParcG
         printf("Chaque fois que vous ferez un tour complet, vous gagnerez %d francs.\n", plateauMonopoly[0].prixMaisonHotel[0]);
         printf("De plus, il vous est possible d'ajouter la regle de la case depart double:\n");
         printf("Cette regle vous permet de gagner 2 * %d francs si vous vous arretez sur la case depart.\n", plateauMonopoly[0].prixMaisonHotel[0]);
-        printf("Voulez vous jouer la regle \"Case Depart double\" ?\n");
-        printf("1: Oui\n2: Non\n>");
-        do {
-            scanf(" %d", regleDepart);
-        } while (*regleDepart !=0 && *regleDepart != 1);
-        if (*regleDepart) {
-            printf("La regle sera donc joue.\n\n");
-        }
-        else {
-            printf("La regle ne sera donc pas joue\n\n");
-        }
         scanf("%d", &next);
 
         printf("Achat de proprietes :\n");
@@ -623,17 +612,6 @@ void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU],int* regleParcG
         printf("Vous pouvez cependant decider d'activer la regle du Parc Gratuit si vous le desirez: \n");
         printf("Cette regle creera un pot commun dans lequel iront toutes vos taxes payees a la banque.\n");
         printf("Ce pactole sera recupere par le joueur qui s'arretera sur la case Parc Gratuit.\n");
-        printf("Voulez vous jouer la regle \"Parc Gratuit\" ?\n");
-        printf("1: Oui\n2: Non\n>");
-        do {
-            scanf(" %d", regleParcGratuit);
-        } while (*regleParcGratuit !=0 && *regleParcGratuit != 1);
-        if (*regleParcGratuit) {
-            printf("La regle sera donc joue.\n\n");
-        }
-        else {
-            printf("La regle ne sera donc pas joue\n\n");
-        }
         scanf("%d", &next);
 
         printf("Prison :\n");
@@ -646,4 +624,34 @@ void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU],int* regleParcG
         printf("Si apres les trois tours, vous n'avez pas fait de double, payez %d francs et jouez au prochain tour.\n\n", plateauMonopoly[10].prixMaisonHotel[0]);
         scanf("%d", &next);
     }
+}
+
+void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit) {
+
+    printf("Voulez vous jouer la regle \"Case Depart double\" ?\n");
+    printf("1: Oui\n0: Non\n>");
+    do {
+        scanf(" %d", regleDepart);
+    } while (*regleDepart !=0 && *regleDepart != 1);
+    if (*regleDepart) {
+        printf("La regle sera donc joue.\n\n");
+    }
+    else {
+        printf("La regle ne sera donc pas joue\n\n");
+    }
+
+
+    printf("Voulez vous jouer la regle \"Parc Gratuit\" ?\n");
+    printf("1: Oui\n0: Non\n>");
+    do {
+        scanf(" %d", regleParcGratuit);
+    } while (*regleParcGratuit !=0 && *regleParcGratuit != 1);
+    if (*regleParcGratuit) {
+        printf("La regle sera donc joue.\n\n");
+    }
+    else {
+        printf("La regle ne sera donc pas joue\n\n");
+    }
+
+
 }
