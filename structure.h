@@ -1,5 +1,6 @@
-#ifndef PROJET_MONOPOLY_STRUCTURE_H
-#define PROJET_MONOPOLY_STRUCTURE_H
+
+#ifndef PROJETMONOPOLY_STRUCTURE_H
+#define PROJETMONOPOLY_STRUCTURE_H
 
 #define TAILLE_PLATEAU 40
 #define TAILLE_MAX_NOM 50
@@ -37,6 +38,4 @@ typedef struct {
     int numeroCarteCaisse;
 } CarteChanceCaisse;
 
-
-
-#endif //PROJET_MONOPOLY_STRUCTURE_H
+#endif //PROJETMONOPOLY_STRUCTURE_H

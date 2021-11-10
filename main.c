@@ -4,7 +4,7 @@
 #include "fonction.h"
 #include "structure.h"
 #include "initialisation.h"
-#include "Jeu.h"
+#include "jeu.h"
 
 
 int main() {
@@ -124,3 +124,4 @@ int main() {
 
     return 0;
 }
+

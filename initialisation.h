@@ -1,7 +1,7 @@
 #include "structure.h"
 
-#ifndef PROJET_MONOPOLY_INITIALISATION_H
-#define PROJET_MONOPOLY_INITIALISATION_H
+#ifndef PROJETMONOPOLY_INITIALISATION_H
+#define PROJETMONOPOLY_INITIALISATION_H
 
 //Initialisation du plateau de jeu
 void initialisationMonopoly (CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]);
@@ -28,4 +28,4 @@ void initialisationCarteChanceCaisse (CarteChanceCaisse* infoChanceCaisse);
 void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]);
 void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit);
 
-#endif //PROJET_MONOPOLY_INITIALISATION_H
+#endif //PROJETMONOPOLY_INITIALISATION_H

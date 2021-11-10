@@ -1,7 +1,7 @@
 #include "structure.h"
 
-#ifndef PROJET_MONOPOLY_FONCTION_H
-#define PROJET_MONOPOLY_FONCTION_H
+#ifndef PROJETMONOPOLY_FONCTION_H
+#define PROJETMONOPOLY_FONCTION_H
 
 //Fonction informative
 void affichageInfoCase(int numeroCase, CaseMonopoly tableauMonopoly[TAILLE_PLATEAU]);
@@ -33,4 +33,4 @@ void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], Info
 void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int nombreJoueur);
 void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int nombreJoueur);
 
-#endif //PROJET_MONOPOLY_FONCTION_H
+#endif //PROJETMONOPOLY_FONCTION_H

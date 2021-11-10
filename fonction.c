@@ -475,3 +475,4 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     printf("|_-->#_|______|_Eaux_|______|______|_Gare_|______|______|Chance|______|_Parc_|\n");
 }
 
+
