@@ -39,7 +39,7 @@ int main() {
         } while(choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5);
 
         if (choix == 1) {
-            printf("Quelle sauvegarde voulez vous lancer ?\n");
+            printf("\nQuelle sauvegarde voulez vous lancer ?\n");
             printf("0) Retour\n");
             printf("1) Sauvegarde 1:");
             jeu1 == 0 ? printf(" Empty\n") : printf(" En jeu\n");
@@ -74,7 +74,7 @@ int main() {
         }
 
         if (choix == 2) {
-            printf("Quelle sauvegarde voulez vous supprimer ?\n");
+            printf("\nQuelle sauvegarde voulez vous supprimer ?\n");
             printf("0) Retour\n");
             printf("1) Sauvegarde 1\n");
             printf("2) Sauvegarde 2\n");
@@ -100,15 +100,18 @@ int main() {
         }
 
         if (choix == 3) {
-            printf("fonction de lecture des regles\n");
+            affichageRegle(plateauMonopoly1);
         }
 
         if (choix == 4) {
-            printf("Createur: HELLER Theo\n");
+            printf("\nCe Monopoly version Deluxe vous est propose par: \n");
+            printf("_______________\n");
+            printf("| HELLER Theo |\n");
+            printf("---------------\n");
         }
 
         if (choix == 5) {
-            printf("Etes vous sur de vouloir quitter definitivement le programme ?\n");
+            printf("\nEtes vous sur de vouloir quitter definitivement le programme ?\n");
             printf("Toutes vos sauvegardes seront supprimees\n");
             printf("0) Quitter definitivement\n");
             printf("1) Continuer\n>");

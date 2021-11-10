@@ -29,4 +29,8 @@ void randomOrdreCaisseChance(int listeAleatoire[16]);
 //Fonction de remise a zero d'une sauvegarde
 void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], CarteChanceCaisse infoChanceCaisse, int listeVariable[NOMBRE_VARIABLE]);
 
+//Fonction d'affichage
+void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int nombreJoueur);
+void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int nombreJoueur);
+
 #endif //PROJET_MONOPOLY_FONCTION_H

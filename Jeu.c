@@ -76,6 +76,8 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 printf("Vous etes tombe sur la case %s numero: %d\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, listeJoueur[joueur].caseJoueur);
             }
 
+            affichagePlateau(plateauMonopoly, listeJoueur, 2);
+
 
             switch (plateauMonopoly[listeJoueur[joueur].caseJoueur].typeCase) {
 

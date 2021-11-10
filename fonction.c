@@ -1,6 +1,7 @@
 #include "structure.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "initialisation.h"
 
 
@@ -352,5 +353,125 @@ void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], Info
     initialisationCarteChanceCaisse(&infoChanceCaisse);
     printf("La sauvegarde a bien ete reinitialise\n");
     return;
+}
+
+void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int nombreJoueur) {
+    char affichagePosition[7] = "";
+    strcat(affichagePosition, listeJoueur[1].caseJoueur == numeroCase ? "1" : " ");
+    strcat(affichagePosition, listeJoueur[2].caseJoueur == numeroCase ? "2" : " ");
+    strcat(affichagePosition, nombreJoueur >= 3 ? (listeJoueur[3].caseJoueur == numeroCase ? "3" : " ") : " ");
+    strcat(affichagePosition, nombreJoueur >= 4 ? (listeJoueur[4].caseJoueur == numeroCase ? "4" : " ") : " ");
+    strcat(affichagePosition, nombreJoueur >= 5 ? (listeJoueur[5].caseJoueur == numeroCase ? "5" : " ") : " ");
+    strcat(affichagePosition, nombreJoueur >= 6 ? (listeJoueur[6].caseJoueur == numeroCase ? "6" : " ") : " ");
+    strcat(affichagePosition, "|");
+    printf("%s", affichagePosition);
+    return;
+}
+
+void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int nombreJoueur) {
+    printf("______________________________________________________________________________\n");
+    printf("|");
+    posJoueur(listeJoueur, 0, nombreJoueur);
+    posJoueur(listeJoueur, 1, nombreJoueur);
+    posJoueur(listeJoueur, 2, nombreJoueur);
+    posJoueur(listeJoueur, 3, nombreJoueur);
+    posJoueur(listeJoueur, 4, nombreJoueur);
+    posJoueur(listeJoueur, 5, nombreJoueur);
+    posJoueur(listeJoueur, 6, nombreJoueur);
+    posJoueur(listeJoueur, 7, nombreJoueur);
+    posJoueur(listeJoueur, 8, nombreJoueur);
+    posJoueur(listeJoueur, 9, nombreJoueur);
+    posJoueur(listeJoueur, 10, nombreJoueur);
+    printf("\n");
+
+    printf("|Depart|_2_H__|Caisse|_2_M0_|Impots|_Gare_|______|Chance|______|______|Prison|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 39, nombreJoueur);
+    printf("                                                              |");
+    posJoueur(listeJoueur, 11, nombreJoueur);
+    printf("\n");
+
+    printf("|__40k_|                 *                                            |______|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 38, nombreJoueur);
+    printf("               *     *                                        |");
+    posJoueur(listeJoueur, 12, nombreJoueur);
+    printf("\n");
+
+    printf("|_Taxe_|             *           *                                    |_Elec_|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 37, nombreJoueur);
+    printf("           *           *                                      |");
+    posJoueur(listeJoueur, 13, nombreJoueur);
+    printf("\n");
+
+    printf("|__35k_|         *           *                                        |______|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 36, nombreJoueur);
+    printf("       *           *                                          |");
+    posJoueur(listeJoueur, 14, nombreJoueur);
+    printf("\n");
+
+    printf("|Chance|     *           *     ________________                       |______|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 35, nombreJoueur);
+    printf("         *     *      |    Monopoly    |        *             |");
+    posJoueur(listeJoueur, 15, nombreJoueur);
+    printf("\n");
+
+    printf("|_Gare_|             *        | Version Deluxe |      *     *         |_Gare_|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 34, nombreJoueur);
+    printf("                      |________________|    *           *     |");
+    posJoueur(listeJoueur, 16, nombreJoueur);
+    printf("\n");
+
+    printf("|______|                                          *           *       |______|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 33, nombreJoueur);
+    printf("  Joueur 1:  20 000                     *           *         |");
+    posJoueur(listeJoueur, 17, nombreJoueur);
+    printf("\n");
+
+    printf("|Caisse|  Joueur 2: 120 000                   *           *           |Caisse|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 32, nombreJoueur);
+    printf("  Joueur 3:  38 500                 *           *             |");
+    posJoueur(listeJoueur, 18, nombreJoueur);
+    printf("\n");
+
+    printf("|______|  Joueur 4:  78 100                     *     *               |______|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 31, nombreJoueur);
+    printf("  Joueur 5: 150 000                         *                 |");
+    posJoueur(listeJoueur, 19, nombreJoueur);
+    printf("\n");
+
+    printf("|______|______________________________________________________________|______|\n");
+
+    printf("|");
+    posJoueur(listeJoueur, 30, nombreJoueur);
+    posJoueur(listeJoueur, 29, nombreJoueur);
+    posJoueur(listeJoueur, 28, nombreJoueur);
+    posJoueur(listeJoueur, 27, nombreJoueur);
+    posJoueur(listeJoueur, 26, nombreJoueur);
+    posJoueur(listeJoueur, 25, nombreJoueur);
+    posJoueur(listeJoueur, 24, nombreJoueur);
+    posJoueur(listeJoueur, 23, nombreJoueur);
+    posJoueur(listeJoueur, 22, nombreJoueur);
+    posJoueur(listeJoueur, 21, nombreJoueur);
+    posJoueur(listeJoueur, 20, nombreJoueur);
+    printf("\n");
+
+    printf("|_-->#_|______|_Eaux_|______|______|_Gare_|______|______|Chance|______|_Parc_|\n");
 }
 
