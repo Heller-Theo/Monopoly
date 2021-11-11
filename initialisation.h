@@ -28,4 +28,13 @@ void initialisationCarteChanceCaisse (CarteChanceCaisse* infoChanceCaisse);
 void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]);
 void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit);
 
+//Fonction de remise a zero d'une sauvegarde
+void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], CarteChanceCaisse* infoChanceCaisse, int listeVariable[NOMBRE_VARIABLE]);
+
+//Initialisation des sauvegarde à partir du fichier binaire
+void initialisationDebutSauvegarde(CaseMonopoly plateauMonopoly1[TAILLE_PLATEAU], CaseMonopoly plateauMonopoly2[TAILLE_PLATEAU], CaseMonopoly plateauMonopoly3[TAILLE_PLATEAU],
+                                  InfoJoueur listeJoueur1[NOMBRE_MAX_JOUEUR], InfoJoueur listeJoueur2[NOMBRE_MAX_JOUEUR], InfoJoueur listeJoueur3[NOMBRE_MAX_JOUEUR],
+                                  int listeVariable1[NOMBRE_VARIABLE], int listeVariable2[NOMBRE_VARIABLE], int listeVariable3[NOMBRE_VARIABLE],
+                                  CarteChanceCaisse infoChanceCaisse[], int* pSauvegarde1, int* pSauvegarde2, int* pSauvegarde3);
+
 #endif //PROJETMONOPOLY_INITIALISATION_H

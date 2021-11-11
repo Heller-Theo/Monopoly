@@ -23,7 +23,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
     int potCommun = listeVariable[8];
 
     if (premierJoueur == 0) {
-        printf("Combien de joueur etes vous ?\n");
+        printf("Combien de joueur etes vous ? (2 a 6 joueurs possible)\n");
         do {
             scanf(" %d", &nombreJoueur);
         } while (nombreJoueur != 2 && nombreJoueur != 3 && nombreJoueur != 4 && nombreJoueur != 5 && nombreJoueur != 6);

@@ -338,22 +338,6 @@ void randomOrdreCaisseChance(int listeAleatoire[16]) {
     }
 }
 
-void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], CarteChanceCaisse infoChanceCaisse, int listeVariable[NOMBRE_VARIABLE]) {
-    listeVariable[0] = 0;
-    listeVariable[1] = 0;
-    listeVariable[2] = 0;
-    listeVariable[3] = 2;
-    listeVariable[4] = 1;
-    listeVariable[5] = 1;
-    listeVariable[6] = 32;
-    listeVariable[7] = 12;
-    listeVariable[8] = 0;
-    initialisationMonopoly(plateauMonopoly);
-    initialisationJoueur(listeJoueur);
-    initialisationCarteChanceCaisse(&infoChanceCaisse);
-    printf("La sauvegarde a bien ete reinitialise\n");
-    return;
-}
 
 void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int nombreJoueur) {
     char affichagePosition[7] = "";
@@ -367,6 +351,19 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
     printf("%s", affichagePosition);
     return;
 }
+
+/*
+void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], numeroJoueur) {
+    char affichageArgent[7] = "";
+    if (listeJoueur[numeroJoueur].argentJoueur >= 1000000) {
+        strcat(affichageArgent,"");
+    }
+    if (listeJoueur[numeroJoueur].argentJoueur >= 100000) {
+        strcat(affichageArgent,"");
+    }
+    return;
+}
+ */
 
 void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int nombreJoueur) {
     printf("______________________________________________________________________________\n");

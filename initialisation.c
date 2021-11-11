@@ -652,8 +652,112 @@ void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit) {
     else {
         printf("La regle ne sera donc pas joue\n\n");
     }
+}
+
+void initialisationSauvegarde(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], CarteChanceCaisse* infoChanceCaisse, int listeVariable[NOMBRE_VARIABLE]) {
+    listeVariable[0] = 0;
+    listeVariable[1] = 0;
+    listeVariable[2] = 0;
+    listeVariable[3] = 2;
+    listeVariable[4] = 1;
+    listeVariable[5] = 1;
+    listeVariable[6] = 32;
+    listeVariable[7] = 12;
+    listeVariable[8] = 0;
+    initialisationMonopoly(plateauMonopoly);
+    initialisationJoueur(listeJoueur);
+    initialisationCarteChanceCaisse(infoChanceCaisse);
+    printf("La sauvegarde a bien ete reinitialise\n");
+    return;
+}
+
+void initialisationDebutSauvegarde(CaseMonopoly plateauMonopoly1[TAILLE_PLATEAU], CaseMonopoly plateauMonopoly2[TAILLE_PLATEAU], CaseMonopoly plateauMonopoly3[TAILLE_PLATEAU],
+                                  InfoJoueur listeJoueur1[NOMBRE_MAX_JOUEUR], InfoJoueur listeJoueur2[NOMBRE_MAX_JOUEUR], InfoJoueur listeJoueur3[NOMBRE_MAX_JOUEUR],
+                                  int listeVariable1[NOMBRE_VARIABLE], int listeVariable2[NOMBRE_VARIABLE], int listeVariable3[NOMBRE_VARIABLE],
+                                  CarteChanceCaisse infoChanceCaisse[], int* pSauvegarde1, int* pSauvegarde2, int* pSauvegarde3) {
+
+    FILE* pfichier = fopen("../monFichierMonopoly.dat", "r");
+    if (pfichier == NULL) {
+        printf("Erreur d'ouverture du fichier.\n");
+
+        printf("Creation de votre fichier de sauvegarde...\n");
+        pfichier = fopen("../monFichierMonopoly.dat", "w");
+
+        initialisationSauvegarde(plateauMonopoly1, listeJoueur1, &infoChanceCaisse[0], listeVariable1);
+        initialisationSauvegarde(plateauMonopoly2, listeJoueur2, &infoChanceCaisse[1], listeVariable2);
+        initialisationSauvegarde(plateauMonopoly3, listeJoueur3, &infoChanceCaisse[2], listeVariable3);
+    }
+    else {
+
+        if (fread(pSauvegarde1, sizeof(int), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (Sauvegarde 1).\n");
+        }
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            if (fread(&plateauMonopoly1[i], sizeof(CaseMonopoly), 1, pfichier) != 1) {
+                printf("Problème d'écriture dans le fichier (Case numero %d de la sauvegarde 1).\n", i);
+            }
+        }
+        for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
+            if (fread(&listeJoueur1[i], sizeof(InfoJoueur), 1, pfichier) != 1) {
+                printf("Problème d'écriture dans le fichier (Joueur numero %d de la sauvegarde 1).\n", i);
+            }
+        }
+        if (fread(listeVariable1, NOMBRE_VARIABLE * sizeof(int), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (liste des variables de la sauvegarde 1).\n");
+        }
+        if (fread(&infoChanceCaisse[0], sizeof(CarteChanceCaisse), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 1).\n");
+        }
 
 
+
+        if (fread(pSauvegarde2, sizeof(int), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (Sauvegarde 2).\n");
+        }
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            if (fread(&plateauMonopoly2[i], sizeof(CaseMonopoly), 1, pfichier) != 1) {
+                printf("Problème d'écriture dans le fichier (Case numero %d de la sauvegarde 2).\n", i);
+            }
+        }
+        for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
+            if (fread(&listeJoueur2[i], sizeof(InfoJoueur), 1, pfichier) != 1) {
+                printf("Problème d'écriture dans le fichier (Joueur numero %d de la sauvegarde 2).\n", i);
+            }
+        }
+        if (fread(listeVariable2, NOMBRE_VARIABLE * sizeof(int), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (liste des variables de la sauvegarde 2).\n");
+        }
+        if (fread(&infoChanceCaisse[1], sizeof(CarteChanceCaisse), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 2).\n");
+        }
+
+
+
+
+        if (fread(pSauvegarde3, sizeof(int), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (Sauvegarde 3).\n");
+        }
+        for (int i = 0; i < TAILLE_PLATEAU; i++) {
+            if (fread(&plateauMonopoly3[i], sizeof(CaseMonopoly), 1, pfichier) != 1) {
+                printf("Problème d'écriture dans le fichier (Case numero %d de la sauvegarde 3).\n", i);
+            }
+        }
+        for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
+            if (fread(&listeJoueur3[i], sizeof(InfoJoueur), 1, pfichier) != 1) {
+                printf("Problème d'écriture dans le fichier (Joueur numero %d de la sauvegarde 3).\n", i);
+            }
+        }
+        if (fread(listeVariable3, NOMBRE_VARIABLE * sizeof(int), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (liste des variables de la sauvegarde 3).\n");
+        }
+        if (fread(&infoChanceCaisse[2], sizeof(CarteChanceCaisse), 1, pfichier) != 1) {
+            printf("Problème d'écriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 3).\n");
+        }
+    }
+
+    fclose(pfichier);
+    pfichier = NULL;
+    return;
 }
 
 
