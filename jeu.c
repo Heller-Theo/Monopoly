@@ -5,6 +5,7 @@
 #include "structure.h"
 #include "initialisation.h"
 
+
 int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], CarteChanceCaisse infoChanceCaisse, int listeVariable[], int premierJoueur) {
 
     int joueur = 0;
@@ -23,6 +24,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
     int potCommun = listeVariable[8];
 
     if (premierJoueur == 0) {
+        choixRegleSupplementaire(&regleDepart, &regleParcGratuit);
         printf("Combien de joueur etes vous ? (2 a 6 joueurs possible)\n");
         do {
             scanf(" %d", &nombreJoueur);

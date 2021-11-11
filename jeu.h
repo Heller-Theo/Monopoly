@@ -1,4 +1,4 @@
-
+#include "structure.h"
 
 #ifndef PROJETMONOPOLY_JEU_H
 #define PROJETMONOPOLY_JEU_H
