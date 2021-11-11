@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 #include "fonction.h"
 #include "structure.h"
@@ -23,8 +22,6 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
     int nombreMaisonRestante = listeVariable[6];
     int nombreHotelRestant = listeVariable[7];
     int potCommun = listeVariable[8];
-
-    char flush;
 
     if (premierJoueur == 0) {
         choixRegleSupplementaire(&regleDepart, &regleParcGratuit);
