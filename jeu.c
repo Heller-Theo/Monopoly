@@ -29,6 +29,10 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
         do {
             scanf(" %d", &nombreJoueur);
         } while (nombreJoueur != 2 && nombreJoueur != 3 && nombreJoueur != 4 && nombreJoueur != 5 && nombreJoueur != 6);
+
+        for (int i = NOMBRE_MAX_JOUEUR; i > nombreJoueur; i--) {
+            listeJoueur[i].argentJoueur = 0;
+        }
     }
 
 
@@ -59,7 +63,11 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 return joueur;
             }
 
-            printf("------------------------------------------------------------------------------\n");
+            printf("------------------------------------------------------------------------------\n\n\n");
+            printf("**%d**\n", listeJoueur[6].caseJoueur);
+
+            affichagePlateau(plateauMonopoly, listeJoueur, nombreJoueur);
+
             printf("C'est au joueur %d de jouer:\n", joueur);
 
             tirage :
@@ -70,14 +78,14 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 scanf("%d",&resultatDe);
                 scanf("%d", &doubleDe);
 
-                if (resultatDe + listeJoueur[joueur].caseJoueur >= 40) {
-                    if (!regleDepart || resultatDe + listeJoueur[joueur].caseJoueur != 40) {
+                if (resultatDe + listeJoueur[joueur].caseJoueur >= TAILLE_PLATEAU) {
+                    if (!regleDepart || resultatDe + listeJoueur[joueur].caseJoueur != TAILLE_PLATEAU) {
                         listeJoueur[joueur].argentJoueur += plateauMonopoly[0].prixTerrainNu;
                         printf("Vous recuperez %d francs pour avoir fait un tour complet.\n", plateauMonopoly[0].prixTerrainNu);
                     }
                 }
 
-                listeJoueur[joueur].caseJoueur = (listeJoueur[joueur].caseJoueur + resultatDe) % 40;
+                listeJoueur[joueur].caseJoueur = (listeJoueur[joueur].caseJoueur + resultatDe) % TAILLE_PLATEAU;
 
                 sortiePrison :
 
@@ -91,8 +99,6 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
                 printf("Vous etes tombe sur la case %s numero: %d\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, listeJoueur[joueur].caseJoueur);
             }
-
-            affichagePlateau(plateauMonopoly, listeJoueur, nombreJoueur);
 
 
             switch (plateauMonopoly[listeJoueur[joueur].caseJoueur].typeCase) {

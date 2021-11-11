@@ -352,18 +352,67 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
     return;
 }
 
-/*
-void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], numeroJoueur) {
+
+void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur) {
     char affichageArgent[7] = "";
-    if (listeJoueur[numeroJoueur].argentJoueur >= 1000000) {
-        strcat(affichageArgent,"");
+    if (listeJoueur[numeroJoueur].argentJoueur < 100) {
+        strcat(affichageArgent,"      ");
     }
-    if (listeJoueur[numeroJoueur].argentJoueur >= 100000) {
-        strcat(affichageArgent,"");
+    else {
+        if (listeJoueur[numeroJoueur].argentJoueur < 1000) {
+            strcat(affichageArgent,"    ");
+        }
+        else {
+            if (listeJoueur[numeroJoueur].argentJoueur < 10000) {
+                strcat(affichageArgent,"   ");
+            }
+            else {
+                if (listeJoueur[numeroJoueur].argentJoueur < 100000) {
+                    strcat(affichageArgent,"  ");
+                }
+                else {
+                    if (listeJoueur[numeroJoueur].argentJoueur < 1000000) {
+                        strcat(affichageArgent," ");
+                    }
+                }
+            }
+        }
     }
+    printf("%s", affichageArgent);
+    if (listeJoueur[numeroJoueur].argentJoueur >= 0) {
+        printf("%d", listeJoueur[numeroJoueur].argentJoueur);
+    }
+    else {
+        printf("0");
+    }
+
     return;
 }
- */
+
+void affichageCasePropriete(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroCase) {
+    if (plateauMonopoly[numeroCase].joueurPossesseur) {
+        if (plateauMonopoly[numeroCase].nombreMaison) {
+            printf("_%d_%dM_", plateauMonopoly[numeroCase].joueurPossesseur, plateauMonopoly[numeroCase].nombreMaison);
+        }
+        else {
+            if (plateauMonopoly[numeroCase].nombreHotel) {
+                printf("_%d__H_", plateauMonopoly[numeroCase].joueurPossesseur);
+            }
+            else {
+                printf("__%d___", plateauMonopoly[numeroCase].joueurPossesseur);
+            }
+        }
+    }
+    else {
+        if (plateauMonopoly[numeroCase].prixCase < 10000) {
+            printf("__%dk__", plateauMonopoly[numeroCase].prixCase / 1000);
+        }
+        else {
+            printf("_%dk__", plateauMonopoly[numeroCase].prixCase / 1000);
+        }
+    }
+}
+
 
 void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int nombreJoueur) {
     printf("______________________________________________________________________________\n");
@@ -381,7 +430,17 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 10, nombreJoueur);
     printf("\n");
 
-    printf("|Depart|_2_H__|Caisse|_2_M0_|Impots|_Gare_|______|Chance|______|______|Prison|\n");
+    printf("|Depart|");
+    affichageCasePropriete(plateauMonopoly, 1);
+    printf("|Caisse|");
+    affichageCasePropriete(plateauMonopoly, 3);
+    printf("|Impots|_Gare_|");
+    affichageCasePropriete(plateauMonopoly, 6);
+    printf("|Chance|");
+    affichageCasePropriete(plateauMonopoly, 8);
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 9);
+    printf("|Prison|\n");
 
     printf("|");
     posJoueur(listeJoueur, 39, nombreJoueur);
@@ -389,7 +448,11 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 11, nombreJoueur);
     printf("\n");
 
-    printf("|__40k_|                 *                                            |______|\n");
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 39);
+    printf("|                 *                                            |");
+    affichageCasePropriete(plateauMonopoly, 11);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 38, nombreJoueur);
@@ -405,7 +468,11 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 13, nombreJoueur);
     printf("\n");
 
-    printf("|__35k_|         *           *                                        |______|\n");
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 37);
+    printf("|         *           *                                        |");
+    affichageCasePropriete(plateauMonopoly, 13);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 36, nombreJoueur);
@@ -413,7 +480,9 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 14, nombreJoueur);
     printf("\n");
 
-    printf("|Chance|     *           *     ________________                       |______|\n");
+    printf("|Chance|     *           *     ________________                       |");
+    affichageCasePropriete(plateauMonopoly, 14);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 35, nombreJoueur);
@@ -429,31 +498,55 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 16, nombreJoueur);
     printf("\n");
 
-    printf("|______|                                          *           *       |______|\n");
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 34);
+    printf("|  Joueur 1: ");
+    affichageArgentJoueur(listeJoueur, 1);
+    printf("                       *           *       |");
+    affichageCasePropriete(plateauMonopoly, 16);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 33, nombreJoueur);
-    printf("  Joueur 1:  20 000                     *           *         |");
+    printf("  Joueur 2: ");
+    affichageArgentJoueur(listeJoueur, 2);
+    printf("                     *           *         |");
     posJoueur(listeJoueur, 17, nombreJoueur);
     printf("\n");
 
-    printf("|Caisse|  Joueur 2: 120 000                   *           *           |Caisse|\n");
+    printf("|Caisse|  Joueur 3: ");
+    affichageArgentJoueur(listeJoueur, 3);
+    printf("                   *           *           |Caisse|\n");
 
     printf("|");
     posJoueur(listeJoueur, 32, nombreJoueur);
-    printf("  Joueur 3:  38 500                 *           *             |");
+    printf("  Joueur 4: ");
+    affichageArgentJoueur(listeJoueur, 4);
+    printf("                 *           *             |");
     posJoueur(listeJoueur, 18, nombreJoueur);
     printf("\n");
 
-    printf("|______|  Joueur 4:  78 100                     *     *               |______|\n");
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 32);
+    printf("|  Joueur 5: ");
+    affichageArgentJoueur(listeJoueur, 5);
+    printf("                     *     *               |");
+    affichageCasePropriete(plateauMonopoly, 18);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 31, nombreJoueur);
-    printf("  Joueur 5: 150 000                         *                 |");
+    printf("  Joueur 6: ");
+    affichageArgentJoueur(listeJoueur, 6);
+    printf("                         *                 |");
     posJoueur(listeJoueur, 19, nombreJoueur);
     printf("\n");
 
-    printf("|______|______________________________________________________________|______|\n");
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 31);
+    printf("|______________________________________________________________|");
+    affichageCasePropriete(plateauMonopoly, 19);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 30, nombreJoueur);
@@ -469,7 +562,17 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 20, nombreJoueur);
     printf("\n");
 
-    printf("|_-->#_|______|_Eaux_|______|______|_Gare_|______|______|Chance|______|_Parc_|\n");
+    printf("|_-->#_|");
+    affichageCasePropriete(plateauMonopoly, 29);
+    printf("|_Eaux_|");
+    affichageCasePropriete(plateauMonopoly, 27);
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 26);
+    printf("|_Gare_|");
+    affichageCasePropriete(plateauMonopoly, 24);
+    printf("|");
+    affichageCasePropriete(plateauMonopoly, 23);
+    printf("|Chance|");
+    affichageCasePropriete(plateauMonopoly, 21);
+    printf("|_Parc_|\n");
 }
-
-

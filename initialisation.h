@@ -1,4 +1,3 @@
-#include "structure.h"
 
 #ifndef PROJETMONOPOLY_INITIALISATION_H
 #define PROJETMONOPOLY_INITIALISATION_H
