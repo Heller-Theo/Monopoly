@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include "fonction.h"
 #include "structure.h"
@@ -23,6 +24,8 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
     int nombreHotelRestant = listeVariable[7];
     int potCommun = listeVariable[8];
 
+    char flush;
+
     if (premierJoueur == 0) {
         choixRegleSupplementaire(&regleDepart, &regleParcGratuit);
         printf("Combien de joueur etes vous ? (2 a 6 joueurs possible)\n");
@@ -30,6 +33,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
             scanf(" %d", &nombreJoueur);
         } while (nombreJoueur != 2 && nombreJoueur != 3 && nombreJoueur != 4 && nombreJoueur != 5 && nombreJoueur != 6);
     }
+
 
     while (nombreJoueur > 1) {
         for (joueur = 1; joueur <= nombreJoueur; joueur++) {

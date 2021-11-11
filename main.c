@@ -20,9 +20,9 @@ int main() {
     int sauvegarde1 = 0, sauvegarde2 = 0, sauvegarde3 = 0;
 
     initialisationDebutSauvegarde(plateauMonopoly1, plateauMonopoly2, plateauMonopoly3,
-                                 listeJoueur1, listeJoueur2, listeJoueur3,
-                                 listeVariable1, listeVariable2, listeVariable3,
-                                 infoChanceCaisse, &sauvegarde1, &sauvegarde2, &sauvegarde3);
+                                  listeJoueur1, listeJoueur2, listeJoueur3,
+                                  listeVariable1, listeVariable2, listeVariable3,
+                                  infoChanceCaisse, &sauvegarde1, &sauvegarde2, &sauvegarde3);
 
     printf("-------- Bienvenue au jeu du Monopoly --------\n\n");
 
@@ -124,4 +124,3 @@ int main() {
 
     return 0;
 }
-
