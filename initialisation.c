@@ -482,10 +482,18 @@ void initialisationPrisonJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
     }
 }
 
+void initialisationNomJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
+    int i = 0;
+    for (i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
+        strcpy( listeJoueur[i].nomJoueur, "Bob" );
+    }
+}
+
 void initialisationJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
     initialisationArgentJoueur( listeJoueur );
     initialisationCaseJoueur( listeJoueur );
     initialisationPrisonJoueur( listeJoueur );
+    initialisationNomJoueur( listeJoueur );
 }
 
 //Initialisation des cartes Chance et Caisse de communauté
@@ -685,6 +693,8 @@ void initialisationDebutSauvegarde(CaseMonopoly plateauMonopoly1[TAILLE_PLATEAU]
         initialisationSauvegarde(plateauMonopoly1, listeJoueur1, &infoChanceCaisse[0], listeVariable1);
         initialisationSauvegarde(plateauMonopoly2, listeJoueur2, &infoChanceCaisse[1], listeVariable2);
         initialisationSauvegarde(plateauMonopoly3, listeJoueur3, &infoChanceCaisse[2], listeVariable3);
+
+        printf("C'est la premiere fois que vous lancez le jeu, un petit tour dans la rubrique aide vous aidera !\n");
     }
     else {
 

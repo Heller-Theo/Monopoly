@@ -3,6 +3,8 @@
 #ifndef PROJETMONOPOLY_FONCTION_H
 #define PROJETMONOPOLY_FONCTION_H
 
+void viderBuffer();
+
 //Fonction informative
 void affichageInfoCase(int numeroCase, CaseMonopoly tableauMonopoly[TAILLE_PLATEAU]);
 void affichagePrixCase(int numeroCase, CaseMonopoly tableauMonopoly[TAILLE_PLATEAU]);

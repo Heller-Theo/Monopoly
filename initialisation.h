@@ -16,6 +16,7 @@ void initialisationPrixMaisonHotel (CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]
 void initialisationJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]);
 void initialisationArgentJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]);
 void initialisationCaseJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]);
+void initialisationNomJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]);
 void initialisationPrisonJoueur (InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]);
 
 //Initialisation des cartes Chance et Caisse de communauté

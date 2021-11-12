@@ -4,6 +4,12 @@
 #include <string.h>
 #include "initialisation.h"
 
+void viderBuffer() {
+    char c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
+}
 
 void affichageInfoCase(int numeroCase, CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
     printf("Case numero %d: %s\n", numeroCase, plateauMonopoly[numeroCase].nomCase);

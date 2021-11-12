@@ -4,6 +4,7 @@
 
 #define TAILLE_PLATEAU 40
 #define TAILLE_MAX_NOM 30
+#define TAILLE_MAX_NOM_JOUEUR 15
 #define NOMBRE_MAX_JOUEUR 6 + 1
 #define NOMBRE_VARIABLE 10
 
@@ -23,6 +24,7 @@ typedef struct {
 } CaseMonopoly;
 
 typedef struct {
+    char nomJoueur[TAILLE_MAX_NOM_JOUEUR];
     int argentJoueur;
     int caseJoueur;
     int prison;

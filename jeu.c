@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "fonction.h"
 #include "structure.h"
 #include "initialisation.h"
@@ -33,6 +34,18 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
         for (int i = NOMBRE_MAX_JOUEUR; i > nombreJoueur; i--) {
             listeJoueur[i].argentJoueur = 0;
         }
+
+        viderBuffer();
+        for (int i = 1; i <= nombreJoueur; i++) {
+            printf("Quel est le nom du joueur %d:\n>", i);
+            fgets(listeJoueur[i].nomJoueur, TAILLE_MAX_NOM_JOUEUR, stdin);
+            listeJoueur[i].nomJoueur[strlen(listeJoueur[i].nomJoueur) - 1] = '\0';
+        }
+    }
+
+    for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
+        printf("Joueur %d:", i);
+        printf("%s\n", listeJoueur[i].nomJoueur);
     }
 
 
@@ -64,11 +77,10 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
             }
 
             printf("------------------------------------------------------------------------------\n\n\n");
-            printf("**%d**\n", listeJoueur[6].caseJoueur);
 
             affichagePlateau(plateauMonopoly, listeJoueur, nombreJoueur);
 
-            printf("C'est au joueur %d de jouer:\n", joueur);
+            printf("C'est a %s de jouer (Joueur %d).\n", listeJoueur[joueur].nomJoueur, joueur);
 
             tirage :
 
@@ -89,7 +101,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
                 sortiePrison :
 
-                if (doubleDe && doubleDeSuccessif >= 8) {
+                if (doubleDe && doubleDeSuccessif >= 2) {
                     printf("Vous avez fait 3 doubles d'affile, vous allez en prison.\n");
                     doubleDeSuccessif = 0;
                     goto prison;
