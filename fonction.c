@@ -359,40 +359,61 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
 }
 
 
-void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur) {
+void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur, int nombreJoueur) {
     char affichageArgent[7] = "";
-    if (listeJoueur[numeroJoueur].argentJoueur < 100) {
-        strcat(affichageArgent,"      ");
-    }
-    else {
-        if (listeJoueur[numeroJoueur].argentJoueur < 1000) {
-            strcat(affichageArgent,"    ");
+    if (numeroJoueur <= nombreJoueur) {
+        if (listeJoueur[numeroJoueur].argentJoueur < 100) {
+            strcat(affichageArgent,"      ");
         }
         else {
-            if (listeJoueur[numeroJoueur].argentJoueur < 10000) {
-                strcat(affichageArgent,"   ");
+            if (listeJoueur[numeroJoueur].argentJoueur < 1000) {
+                strcat(affichageArgent,"    ");
             }
             else {
-                if (listeJoueur[numeroJoueur].argentJoueur < 100000) {
-                    strcat(affichageArgent,"  ");
+                if (listeJoueur[numeroJoueur].argentJoueur < 10000) {
+                    strcat(affichageArgent,"   ");
                 }
                 else {
-                    if (listeJoueur[numeroJoueur].argentJoueur < 1000000) {
-                        strcat(affichageArgent," ");
+                    if (listeJoueur[numeroJoueur].argentJoueur < 100000) {
+                        strcat(affichageArgent,"  ");
+                    }
+                    else {
+                        if (listeJoueur[numeroJoueur].argentJoueur < 1000000) {
+                            strcat(affichageArgent," ");
+                        }
                     }
                 }
             }
         }
-    }
-    printf("%s", affichageArgent);
-    if (listeJoueur[numeroJoueur].argentJoueur >= 0) {
-        printf("%d", listeJoueur[numeroJoueur].argentJoueur);
+        printf("%s", affichageArgent);
+        if (listeJoueur[numeroJoueur].argentJoueur >= 0) {
+            printf("%d", listeJoueur[numeroJoueur].argentJoueur);
+        }
+        else {
+            printf("0");
+        }
     }
     else {
-        printf("0");
+        printf("       ");
     }
 
     return;
+}
+
+void affichageNomJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur, int nombreJoueur) {
+    if (numeroJoueur <= nombreJoueur) {
+        unsigned int longueurNom = strlen(listeJoueur[numeroJoueur].nomJoueur);
+        char affichageNom[TAILLE_MAX_NOM_JOUEUR] = "";
+        for (int i = 0; i < TAILLE_MAX_NOM_JOUEUR - longueurNom - 1; i++) {
+            strcat(affichageNom, " ");
+        }
+        printf("%s", listeJoueur[numeroJoueur].nomJoueur);
+        printf("%s:", affichageNom);
+    }
+    else {
+        printf("           ");
+    }
+
 }
 
 void affichageCasePropriete(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroCase) {
@@ -506,45 +527,51 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
 
     printf("|");
     affichageCasePropriete(plateauMonopoly, 34);
-    printf("|  Joueur 1: ");
-    affichageArgentJoueur(listeJoueur, 1);
-    printf("                       *           *       |");
+    printf("|  ");
+    affichageNomJoueur(listeJoueur, 1, nombreJoueur);
+    affichageArgentJoueur(listeJoueur, 1, nombreJoueur);
+    printf("                      *           *       |");
     affichageCasePropriete(plateauMonopoly, 16);
     printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 33, nombreJoueur);
-    printf("  Joueur 2: ");
-    affichageArgentJoueur(listeJoueur, 2);
-    printf("                     *           *         |");
+    printf("  ");
+    affichageNomJoueur(listeJoueur, 2, nombreJoueur);
+    affichageArgentJoueur(listeJoueur, 2, nombreJoueur);
+    printf("                    *           *         |");
     posJoueur(listeJoueur, 17, nombreJoueur);
     printf("\n");
 
-    printf("|Caisse|  Joueur 3: ");
-    affichageArgentJoueur(listeJoueur, 3);
-    printf("                   *           *           |Caisse|\n");
+    printf("|Caisse|  ");
+    affichageNomJoueur(listeJoueur, 3, nombreJoueur);
+    affichageArgentJoueur(listeJoueur, 3, nombreJoueur);
+    printf("                  *           *           |Caisse|\n");
 
     printf("|");
     posJoueur(listeJoueur, 32, nombreJoueur);
-    printf("  Joueur 4: ");
-    affichageArgentJoueur(listeJoueur, 4);
-    printf("                 *           *             |");
+    printf("  ");
+    affichageNomJoueur(listeJoueur, 4, nombreJoueur);
+    affichageArgentJoueur(listeJoueur, 4, nombreJoueur);
+    printf("                *           *             |");
     posJoueur(listeJoueur, 18, nombreJoueur);
     printf("\n");
 
     printf("|");
     affichageCasePropriete(plateauMonopoly, 32);
-    printf("|  Joueur 5: ");
-    affichageArgentJoueur(listeJoueur, 5);
-    printf("                     *     *               |");
+    printf("|  ");
+    affichageNomJoueur(listeJoueur, 5, nombreJoueur);
+    affichageArgentJoueur(listeJoueur, 5, nombreJoueur);
+    printf("                    *     *               |");
     affichageCasePropriete(plateauMonopoly, 18);
     printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 31, nombreJoueur);
-    printf("  Joueur 6: ");
-    affichageArgentJoueur(listeJoueur, 6);
-    printf("                         *                 |");
+    printf("  ");
+    affichageNomJoueur(listeJoueur, 6, nombreJoueur);
+    affichageArgentJoueur(listeJoueur, 6, nombreJoueur);
+    printf("                        *                 |");
     posJoueur(listeJoueur, 19, nombreJoueur);
     printf("\n");
 

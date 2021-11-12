@@ -37,8 +37,8 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
         viderBuffer();
         for (int i = 1; i <= nombreJoueur; i++) {
-            printf("Quel est le nom du joueur %d:\n>", i);
-            fgets(listeJoueur[i].nomJoueur, TAILLE_MAX_NOM_JOUEUR, stdin);
+            printf("Quel est le nom du joueur %d (%d caracteres max):\n>", i, TAILLE_MAX_NOM_JOUEUR-1);
+            fgets(listeJoueur[i].nomJoueur, TAILLE_MAX_NOM_JOUEUR + 1, stdin);
             listeJoueur[i].nomJoueur[strlen(listeJoueur[i].nomJoueur) - 1] = '\0';
         }
     }
