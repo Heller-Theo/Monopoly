@@ -87,8 +87,8 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
             if (listeJoueur[joueur].prison == 0) {
 
                 tirageDeuxDe(&resultatDe, &doubleDe);
-                scanf("%d",&resultatDe);
-                scanf("%d", &doubleDe);
+                //scanf("%d",&resultatDe);
+                //scanf("%d", &doubleDe);
 
                 if (resultatDe + listeJoueur[joueur].caseJoueur >= TAILLE_PLATEAU) {
                     if (!regleDepart || resultatDe + listeJoueur[joueur].caseJoueur != TAILLE_PLATEAU) {

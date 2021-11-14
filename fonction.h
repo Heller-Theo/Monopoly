@@ -4,6 +4,7 @@
 #define PROJETMONOPOLY_FONCTION_H
 
 void viderBuffer();
+void color(int couleurDuTexte,int couleurDeFond);
 
 //Fonction informative
 void affichageInfoCase(int numeroCase, CaseMonopoly tableauMonopoly[TAILLE_PLATEAU]);

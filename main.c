@@ -16,7 +16,7 @@ int main() {
     int listeVariable1[NOMBRE_VARIABLE], listeVariable2[NOMBRE_VARIABLE], listeVariable3[NOMBRE_VARIABLE];
     CarteChanceCaisse infoChanceCaisse[3];
 
-    int choix = 0, choix2 = 1;
+    int choix = 0, choix2 = 0;
     int sauvegarde1 = 0, sauvegarde2 = 0, sauvegarde3 = 0;
 
     if (choix2) {
