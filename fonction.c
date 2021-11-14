@@ -353,15 +353,61 @@ void randomOrdreCaisseChance(int listeAleatoire[16]) {
 
 
 void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int nombreJoueur) {
-    char affichagePosition[7] = "";
-    strcat(affichagePosition, listeJoueur[1].caseJoueur == numeroCase ? "1" : " ");
-    strcat(affichagePosition, listeJoueur[2].caseJoueur == numeroCase ? "2" : " ");
-    strcat(affichagePosition, nombreJoueur >= 3 ? (listeJoueur[3].caseJoueur == numeroCase ? "3" : " ") : " ");
-    strcat(affichagePosition, nombreJoueur >= 4 ? (listeJoueur[4].caseJoueur == numeroCase ? "4" : " ") : " ");
-    strcat(affichagePosition, nombreJoueur >= 5 ? (listeJoueur[5].caseJoueur == numeroCase ? "5" : " ") : " ");
-    strcat(affichagePosition, nombreJoueur >= 6 ? (listeJoueur[6].caseJoueur == numeroCase ? "6" : " ") : " ");
-    strcat(affichagePosition, "|");
-    printf("%s", affichagePosition);
+    if (listeJoueur[1].caseJoueur == numeroCase) {
+        color(1,0);
+        printf("1");
+        color(7,0);
+    }
+    else {
+        printf(" ");
+    }
+
+    if (listeJoueur[2].caseJoueur == numeroCase) {
+        color(4,0);
+        printf("2");
+        color(7,0);
+    }
+    else {
+        printf(" ");
+    }
+
+    if (nombreJoueur >= 3 && listeJoueur[3].caseJoueur == numeroCase) {
+        color(2,0);
+        printf("3");
+        color(7,0);
+    }
+    else {
+        printf(" ");
+    }
+
+    if (nombreJoueur >= 4 && listeJoueur[4].caseJoueur == numeroCase) {
+        color(14,0);
+        printf("4");
+        color(7,0);
+    }
+    else {
+        printf(" ");
+    }
+
+    if (nombreJoueur >= 5 && listeJoueur[5].caseJoueur == numeroCase) {
+        color(5,0);
+        printf("5");
+        color(7,0);
+    }
+    else {
+        printf(" ");
+    }
+
+    if (nombreJoueur >= 6 && listeJoueur[6].caseJoueur == numeroCase) {
+        color(11,0);
+        printf("6");
+        color(7,0);
+    }
+    else {
+        printf(" ");
+    }
+
+    printf("|");
     return;
 }
 
@@ -447,11 +493,10 @@ void affichageCasePropriete(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int nu
     }
 }
 
-#define COULEUR_TEXTE 7
 
 void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int nombreJoueur) {
 
-    color(COULEUR_TEXTE, 0);
+    color(7, 0);
 
     printf("______________________________________________________________________________\n");
     printf("|");
@@ -468,27 +513,51 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 10, nombreJoueur);
     printf("\n");
 
-    printf("|Depart|");
+    printf("|");
+    color(7,0);
+    printf("Depart");
+    color(7,0);
+    printf("|");
     color(5,0);
     affichageCasePropriete(plateauMonopoly, 1);
-    color(COULEUR_TEXTE,0);
-    printf("|Caisse|");
+    color(7,0);
+    printf("|");
+    color(7,0);
+    printf("Caisse");
+    color(7,0);
+    printf("|");
     color(5,0);
     affichageCasePropriete(plateauMonopoly, 3);
-    color(COULEUR_TEXTE,0);
-    printf("|Impots|_Gare_|");
+    color(7,0);
+    printf("|");
+    color(7,0);
+    printf("Impots");
+    color(7,0);
+    printf("|");
+    color(15,0);
+    printf("_Gare_");
+    color(7,0);
+    printf("|");
     color(3,0);
     affichageCasePropriete(plateauMonopoly, 6);
-    color(COULEUR_TEXTE,0);
-    printf("|Chance|");
+    color(7,0);
+    printf("|");
+    color(7,0);
+    printf("Chance");
+    color(7,0);
+    printf("|");
     color(3,0);
     affichageCasePropriete(plateauMonopoly, 8);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|");
     color(3,0);
     affichageCasePropriete(plateauMonopoly, 9);
-    color(COULEUR_TEXTE,0);
-    printf("|Prison|\n");
+    color(7,0);
+    printf("|");
+    color(7,0);
+    printf("Prison");
+    color(7,0);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 39, nombreJoueur);
@@ -499,11 +568,11 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     printf("|");
     color(1,0);
     affichageCasePropriete(plateauMonopoly, 39);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|                 *                                            |");
     color(13,0);
     affichageCasePropriete(plateauMonopoly, 11);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|\n");
 
     printf("|");
@@ -512,7 +581,15 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 12, nombreJoueur);
     printf("\n");
 
-    printf("|_Taxe_|             *           *                                    |_Elec_|\n");
+    printf("|");
+    color(7,0);
+    printf("_Taxe_");
+    color(7,0);
+    printf("|             *           *                                    |");
+    color(15,0);
+    printf("_Elec_");
+    color(7,0);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 37, nombreJoueur);
@@ -523,11 +600,11 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     printf("|");
     color(1,0);
     affichageCasePropriete(plateauMonopoly, 37);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|         *           *                                        |");
     color(13,0);
     affichageCasePropriete(plateauMonopoly, 13);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|\n");
 
     printf("|");
@@ -536,10 +613,14 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 14, nombreJoueur);
     printf("\n");
 
-    printf("|Chance|     *           *     ________________                       |");
+    printf("|");
+    color(7,0);
+    printf("Chance");
+    color(7,0);
+    printf("|     *           *     ________________                       |");
     color(13,0);
     affichageCasePropriete(plateauMonopoly, 14);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|\n");
 
     printf("|");
@@ -548,7 +629,15 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 15, nombreJoueur);
     printf("\n");
 
-    printf("|_Gare_|             *        | Version Deluxe |      *     *         |_Gare_|\n");
+    printf("|");
+    color(15,0);
+    printf("_Gare_");
+    color(7,0);
+    printf("|             *        | Version Deluxe |      *     *         |");
+    color(15,0);
+    printf("_Gare_");
+    color(7,0);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 34, nombreJoueur);
@@ -559,35 +648,51 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     printf("|");
     color(2,0);
     affichageCasePropriete(plateauMonopoly, 34);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|  ");
     affichageNomJoueur(listeJoueur, 1, nombreJoueur);
+    color(15,0);
     affichageArgentJoueur(listeJoueur, 1, nombreJoueur);
+    color(7,0);
     printf("                      *           *       |");
     color(6,0);
     affichageCasePropriete(plateauMonopoly, 16);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 33, nombreJoueur);
     printf("  ");
     affichageNomJoueur(listeJoueur, 2, nombreJoueur);
+    color(15,0);
     affichageArgentJoueur(listeJoueur, 2, nombreJoueur);
+    color(7,0);
     printf("                    *           *         |");
     posJoueur(listeJoueur, 17, nombreJoueur);
     printf("\n");
 
-    printf("|Caisse|  ");
+    printf("|");
+    color(7,0);
+    printf("Caisse");
+    color(7,0);
+    printf("|  ");
     affichageNomJoueur(listeJoueur, 3, nombreJoueur);
+    color(15,0);
     affichageArgentJoueur(listeJoueur, 3, nombreJoueur);
-    printf("                  *           *           |Caisse|\n");
+    color(7,0);
+    printf("                  *           *           |");
+    color(7,0);
+    printf("Caisse");
+    color(7,0);
+    printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 32, nombreJoueur);
     printf("  ");
     affichageNomJoueur(listeJoueur, 4, nombreJoueur);
+    color(15,0);
     affichageArgentJoueur(listeJoueur, 4, nombreJoueur);
+    color(7,0);
     printf("                *           *             |");
     posJoueur(listeJoueur, 18, nombreJoueur);
     printf("\n");
@@ -595,21 +700,25 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     printf("|");
     color(2,0);
     affichageCasePropriete(plateauMonopoly, 32);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|  ");
     affichageNomJoueur(listeJoueur, 5, nombreJoueur);
+    color(15,0);
     affichageArgentJoueur(listeJoueur, 5, nombreJoueur);
+    color(7,0);
     printf("                    *     *               |");
     color(6,0);
     affichageCasePropriete(plateauMonopoly, 18);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|\n");
 
     printf("|");
     posJoueur(listeJoueur, 31, nombreJoueur);
     printf("  ");
     affichageNomJoueur(listeJoueur, 6, nombreJoueur);
+    color(15,0);
     affichageArgentJoueur(listeJoueur, 6, nombreJoueur);
+    color(7,0);
     printf("                        *                 |");
     posJoueur(listeJoueur, 19, nombreJoueur);
     printf("\n");
@@ -617,11 +726,11 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     printf("|");
     color(2,0);
     affichageCasePropriete(plateauMonopoly, 31);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|______________________________________________________________|");
     color(6,0);
     affichageCasePropriete(plateauMonopoly, 19);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|\n");
 
     printf("|");
@@ -638,31 +747,51 @@ void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur l
     posJoueur(listeJoueur, 20, nombreJoueur);
     printf("\n");
 
-    printf("|_-->#_|");
+    printf("|");
+    color(7,0);
+    printf("_-->#_");
+    color(7,0);
+    printf("|");
     color(14,0);
     affichageCasePropriete(plateauMonopoly, 29);
-    color(COULEUR_TEXTE,0);
-    printf("|_Eaux_|");
+    color(7,0);
+    printf("|");
+    color(15,0);
+    printf("_Eaux_");
+    color(7,0);
+    printf("|");
     color(14,0);
     affichageCasePropriete(plateauMonopoly, 27);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|");
     color(14,0);
     affichageCasePropriete(plateauMonopoly, 26);
-    color(COULEUR_TEXTE,0);
-    printf("|_Gare_|");
+    color(7,0);
+    printf("|");
+    color(15,0);
+    printf("_Gare_");
+    color(7,0);
+    printf("|");
     color(4,0);
     affichageCasePropriete(plateauMonopoly, 24);
-    color(COULEUR_TEXTE,0);
+    color(7,0);
     printf("|");
     color(4,0);
     affichageCasePropriete(plateauMonopoly, 23);
-    color(COULEUR_TEXTE,0);
-    printf("|Chance|");
+    color(7,0);
+    printf("|");
+    color(7,0);
+    printf("Chance");
+    color(7,0);
+    printf("|");
     color(4,0);
     affichageCasePropriete(plateauMonopoly, 21);
-    color(COULEUR_TEXTE,0);
-    printf("|_Parc_|\n");
+    color(7,0);
+    printf("|");
+    color(7,0);
+    printf("_Parc_");
+    color(7,0);
+    printf("|\n");
 
     color(7,0);
 }
