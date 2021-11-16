@@ -70,7 +70,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 listeVariable[3] = nombreJoueur;
                 listeVariable[4] = carteLiberePrisonChance;
                 listeVariable[5] = carteLiberePrisonCaisse;
-                listeVariable[6] = nombreHotelRestant;
+                listeVariable[6] = nombreMaisonRestante;
                 listeVariable[7] = nombreHotelRestant;
                 listeVariable[8] = potCommun;
                 return joueur;
@@ -87,8 +87,8 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
             if (listeJoueur[joueur].prison == 0) {
 
                 tirageDeuxDe(&resultatDe, &doubleDe);
-                //scanf("%d",&resultatDe);
-                //scanf("%d", &doubleDe);
+                scanf("%d",&resultatDe);
+                scanf("%d", &doubleDe);
 
                 if (resultatDe + listeJoueur[joueur].caseJoueur >= TAILLE_PLATEAU) {
                     if (!regleDepart || resultatDe + listeJoueur[joueur].caseJoueur != TAILLE_PLATEAU) {

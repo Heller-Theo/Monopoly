@@ -10,7 +10,7 @@
 int main() {
     srand(time(NULL));
 
-    //Declaration des elements utile aux 3 sauvegardes.
+    //Declaration des elements utiles aux 3 sauvegardes.
     CaseMonopoly plateauMonopoly1[TAILLE_PLATEAU], plateauMonopoly2[TAILLE_PLATEAU], plateauMonopoly3[TAILLE_PLATEAU];
     InfoJoueur listeJoueur1[NOMBRE_MAX_JOUEUR], listeJoueur2[NOMBRE_MAX_JOUEUR], listeJoueur3[NOMBRE_MAX_JOUEUR];
     int listeVariable1[NOMBRE_VARIABLE], listeVariable2[NOMBRE_VARIABLE], listeVariable3[NOMBRE_VARIABLE];
@@ -277,8 +277,6 @@ int main() {
     else {
         enregistrementFinSauvegarde(plateauMonopoly1, plateauMonopoly2, plateauMonopoly3, listeJoueur1, listeJoueur2, listeJoueur3, listeVariable1, listeVariable2, listeVariable3, infoChanceCaisse, &sauvegarde1, &sauvegarde2, &sauvegarde3);
     }
-
-
 
     return 0;
 }
