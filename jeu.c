@@ -43,6 +43,10 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
         }
     }
 
+    listeVariable[0] = regleDepart;
+    listeVariable[1] = regleParcGratuit;
+    listeVariable[3] = nombreJoueur;
+
     for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
         printf("Joueur %d:", i);
         printf("%s\n", listeJoueur[i].nomJoueur);
@@ -78,7 +82,9 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
             printf("------------------------------------------------------------------------------\n\n\n");
 
-            affichagePlateau(plateauMonopoly, listeJoueur, nombreJoueur);
+            listeVariable[8] = potCommun;
+
+            affichagePlateau(plateauMonopoly, listeJoueur, listeVariable);
 
             printf("C'est a %s de jouer (Joueur %d).\n", listeJoueur[joueur].nomJoueur, joueur);
 

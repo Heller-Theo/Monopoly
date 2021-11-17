@@ -53,6 +53,7 @@ void initialisationMaisonHotelPossession (CaseMonopoly plateauMonopoly[TAILLE_PL
         plateauMonopoly[i].nombreHotel = 0;
         plateauMonopoly[i].nombreMaison = 0;
         plateauMonopoly[i].joueurPossesseur = 0;
+        plateauMonopoly[i].hypotheque = 0;
     }
 }
 
@@ -440,6 +441,7 @@ void initialisationPrixMaisonHotel (CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]
     plateauMonopoly[28].prixMaisonHotel[0] = 400;
     plateauMonopoly[28].prixMaisonHotel[1] = 1000;
 
+    // ======================================================================
     //Nombre Maison restante
     plateauMonopoly[0].prixMaisonHotel[1] = 6942;
     //Nombre Hotel restant

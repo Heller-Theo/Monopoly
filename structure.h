@@ -21,6 +21,7 @@ typedef struct {
     int nombreMaison;
     int nombreHotel;
     int typeCase;
+    int hypotheque;
 } CaseMonopoly;
 
 typedef struct {
