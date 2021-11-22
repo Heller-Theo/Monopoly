@@ -16,7 +16,7 @@ int main() {
     int listeVariable1[NOMBRE_VARIABLE], listeVariable2[NOMBRE_VARIABLE], listeVariable3[NOMBRE_VARIABLE];
     CarteChanceCaisse infoChanceCaisse[3];
 
-    int choix = 0, choix2 = 0;
+    int choix = 0, choix2 = 1;
     int sauvegarde1 = 0, sauvegarde2 = 0, sauvegarde3 = 0;
 
     if (choix2) {
@@ -211,7 +211,7 @@ int main() {
             printf("Probleme d'écriture dans le fichier (Sauvegarde 1).\n");
         }
         for (int i = 0; i < TAILLE_PLATEAU; i++) {
-            if (fwrite(&plateauMonopoly1[i], sizeof(CaseMonopoly), 1, pfichier) != 1) {
+            if (fwrite(&plateauMonopoly1[i], sizeof(int), 1, pfichier) != 1) {
                 printf("Probleme d'écriture dans le fichier (Case numero %d de la sauvegarde 1).\n", i);
             }
         }

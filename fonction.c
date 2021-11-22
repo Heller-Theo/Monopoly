@@ -4,12 +4,70 @@
 #include <string.h>
 #include <windows.h>
 #include "initialisation.h"
+#include <ctype.h>
 
 void viderBuffer() {
     char c;
     do {
         c = getchar();
     } while (c != '\n' && c != EOF);
+}
+
+void verificationSaisie(int* choix) {
+
+    int valide = 0, i = 0;
+    unsigned int len = 0;
+    char s[MAX_CARACT_LIGNE];
+    //viderBuffer();
+
+    do {
+        valide = 0;
+        printf(">");
+
+        fgets(s, sizeof(s), stdin);
+        len = strlen(s);
+
+        while (len > 0 && isspace(s[len - 1])) {
+            len--;
+        }
+
+        if (len > 0)
+        {
+            valide = 1;
+            for (i = 0; i < len; ++i)
+            {
+                if (!isdigit(s[i]))
+                {
+                    valide = 0;
+                    break;
+                }
+            }
+            *choix = atoi(s);
+        }
+        if (!valide) {
+            printf("Veuillez saisir une entree valide.\n");
+        }
+    } while (!valide);
+}
+
+void choixEntier(int* choix, int* liste, int tailleListe) {
+    int i = 0, valide = 0;
+    //viderBuffer();
+
+    do {
+        valide = 0;
+        verificationSaisie(choix);
+
+        for (i = 0; i < tailleListe; i++) {
+            if (*choix == liste[i]) {
+                valide = 1;
+                break;
+            }
+        }
+        if (!valide) {
+            printf("Veuillez saisir un chiffre valide.\n");
+        }
+    } while (!valide);
 }
 
 void color(int couleurDuTexte,int couleurDeFond) // fonction d'affichage de couleurs
@@ -134,6 +192,18 @@ int hypothequeGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGro
         }
     }
     return hypotheque;
+}
+
+int maisonHotelGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeCase) {
+    int i = 0, maisonHotel = 0;
+    for (i = 0; i < TAILLE_PLATEAU; i++) {
+        if (plateauMonopoly[i].numeroGroupeCase == numeroGroupeCase) {
+            if (plateauMonopoly[i].nombreMaison || plateauMonopoly[i].nombreHotel) {
+                maisonHotel += 1;
+            }
+        }
+    }
+    return maisonHotel;
 }
 
 void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante) {
@@ -392,6 +462,63 @@ void venteHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
 }
 
+void hypothequeCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
+    int joueur = 0, groupePropriete = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
+
+    printf("Quel joueur veux hypothequer une case ?\n");
+    do {
+        scanf(" %d", &joueur);
+    } while (joueur != 1 && joueur != 2 && joueur != 3 && joueur != 4 && joueur != 5);
+
+    printf("Vous pouvez hypothequer les cases suivantes :\n");
+    for (groupePropriete = 1; groupePropriete <= 10 ; groupePropriete++) {
+        if (!maisonHotelGroupe(plateauMonopoly, groupePropriete)) {
+            for (numeroCase = 0; numeroCase < 40; numeroCase++) {
+                if (plateauMonopoly[numeroCase].joueurPossesseur == joueur) {
+                    if (plateauMonopoly[numeroCase].hypotheque == 0) {
+                        if (plateauMonopoly[numeroCase].numeroGroupeCase == groupePropriete) {
+                            printf("%d: %s (%d francs)\n", numeroCase, plateauMonopoly[numeroCase].nomCase, plateauMonopoly[numeroCase].prixTerrainNu/2);
+                            auMoinsUnChoix += 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (!auMoinsUnChoix) {
+        printf("Aucune\n");
+        return;
+    }
+    printf("0: Retour\n");
+
+    scanf(" %d", &choix);
+
+    if (choix == 0) {
+        return;
+    }
+
+    if (plateauMonopoly[choix].joueurPossesseur == joueur) {
+        if (!maisonHotelGroupe(plateauMonopoly, plateauMonopoly[choix].numeroGroupeCase)) {
+            if (plateauMonopoly[choix].hypotheque == 0) {
+                listeJoueur[joueur].argentJoueur += plateauMonopoly[choix].prixTerrainNu / 2;
+                plateauMonopoly[choix].hypotheque = 1;
+                printf("Vous avez hypotheque la case %s.\n", plateauMonopoly[choix].nomCase);
+            }
+            else {
+                printf("Cette propriete est deja hypotheque");
+            }
+        }
+        else {
+            printf("Il y a une propriete avec des batiments sur un des terrains de ce groupe.\n");
+        }
+    }
+    else {
+        printf("Cette case ne vous appartient pas.\n");
+    }
+}
+
+
 int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante, int* pNombreHotelRestant) {
     int verif = 0, choix1 = 0, choix2 = 0;
     do {
@@ -585,29 +712,35 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
 void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur, int nombreJoueur) {
     char affichageArgent[7] = "";
     if (numeroJoueur <= nombreJoueur) {
-        if (listeJoueur[numeroJoueur].argentJoueur < 100) {
+        if (listeJoueur[numeroJoueur].argentJoueur < 10) {
             strcat(affichageArgent,"      ");
         }
         else {
-            if (listeJoueur[numeroJoueur].argentJoueur < 1000) {
-                strcat(affichageArgent,"    ");
+            if (listeJoueur[numeroJoueur].argentJoueur < 100) {
+                strcat(affichageArgent,"     ");
             }
             else {
-                if (listeJoueur[numeroJoueur].argentJoueur < 10000) {
-                    strcat(affichageArgent,"   ");
+                if (listeJoueur[numeroJoueur].argentJoueur < 1000) {
+                    strcat(affichageArgent,"    ");
                 }
                 else {
-                    if (listeJoueur[numeroJoueur].argentJoueur < 100000) {
-                        strcat(affichageArgent,"  ");
+                    if (listeJoueur[numeroJoueur].argentJoueur < 10000) {
+                        strcat(affichageArgent,"   ");
                     }
                     else {
-                        if (listeJoueur[numeroJoueur].argentJoueur < 1000000) {
-                            strcat(affichageArgent," ");
+                        if (listeJoueur[numeroJoueur].argentJoueur < 100000) {
+                            strcat(affichageArgent,"  ");
+                        }
+                        else {
+                            if (listeJoueur[numeroJoueur].argentJoueur < 1000000) {
+                                strcat(affichageArgent," ");
+                            }
                         }
                     }
                 }
             }
         }
+
         printf("%s", affichageArgent);
         if (listeJoueur[numeroJoueur].argentJoueur >= 0) {
             printf("%d", listeJoueur[numeroJoueur].argentJoueur);

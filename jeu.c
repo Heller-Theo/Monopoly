@@ -79,10 +79,11 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 listeVariable[8] = potCommun;
                 return joueur;
             }
+            listeVariable[8] = potCommun;
+
 
             printf("------------------------------------------------------------------------------\n\n\n");
 
-            listeVariable[8] = potCommun;
 
             affichagePlateau(plateauMonopoly, listeJoueur, listeVariable);
 

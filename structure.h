@@ -11,16 +11,18 @@
 #define NOMBRE_CARTE_CHANCE 16
 #define NOMBRE_CARTE_CAISSE 16
 
+#define MAX_CARACT_LIGNE 100
+
 typedef struct {
     char nomCase[TAILLE_MAX_NOM];
     int prixTerrainNu;
     int prixMaisonHotel[6];
     int numeroGroupeCase;
-    int joueurPossesseur;
+    int typeCase;
     int prixCase;
     int nombreMaison;
     int nombreHotel;
-    int typeCase;
+    int joueurPossesseur;
     int hypotheque;
 } CaseMonopoly;
 

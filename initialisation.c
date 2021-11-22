@@ -563,77 +563,205 @@ void initialisationCarteChanceCaisse (CarteChanceCaisse* pInfoChanceCaisse) {
 
 //Affichage et Initialisation des regles
 void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
-    int next = 1;
-    scanf("%d", &next);
-    if (next) {
-        printf("\n-------------------------Bienvenue au jeu du Monopoly-------------------------\n\n\n");
-        printf("Voici les regles:\n\n");
+    int choix = 0;
+    int listeChoix10[] = {0,1,2,3,4,5,6,7,8,9};
 
-        printf("A chaque fois que le mot \"Continuer\" apparaitra, vous pourrez :\n");
-        printf("Arreter le jeu en tapant \"0\".\n");
-        printf("Continuer de jouer en tapant \"1\".\n");
-        printf("Demander des informations sur les joueurs ou les cases du Monopoly en tapant \"2\".\n");
-        printf("Acheter des maisons et des hotels en tapant \"3\".\n\n");
-        scanf("%d", &next);
+    printf("\nChoisissez la section qui vous interesse :\n");
+    printf("0) Retour\n");
+    printf("1) Presentation generale\n");
+    printf("2) Propriete, maison, hotel et monopole\n");
+    printf("3) Prison\n");
+    printf("4) Gares et services publiques\n");
+    printf("5) Hypotheque et vente de terrain\n");
+    printf("6) Regles diverses\n");
+    printf("7) Faillite\n");
+    printf("8) Regles optionnelles\n");
+    printf("9) Fonctionnement du jeu et des touches\n");
+    viderBuffer();
 
-        printf("Double :\n");
-        printf("Si vous faites un double, vous pourrez rejouer, mais attention, 3 doubles d'affile et vous irez en prison.\n\n");
-        scanf("%d", &next);
+    do {
 
-        printf("Case Depart :\n");
-        printf("Chaque fois que vous ferez un tour complet, vous gagnerez %d francs.\n", plateauMonopoly[0].prixMaisonHotel[0]);
-        printf("De plus, il vous est possible d'ajouter la regle de la case depart double:\n");
-        printf("Cette regle vous permet de gagner 2 * %d francs si vous vous arretez sur la case depart.\n", plateauMonopoly[0].prixMaisonHotel[0]);
-        scanf("%d", &next);
+        choixEntier(&choix, listeChoix10, 10);
 
-        printf("Achat de proprietes :\n");
-        printf("Si vous vous arretez sur une propriete qui n'appartient pas a un autre joueur, vous pourrez l'acheter.\n");
-        printf("Si vous possedez toutes les proprietes d'une meme couleur, le prix du loyer sera double.\n");
-        printf("De plus, vous pourrez en tapant \"3\" apres \"Continuer\" acheter des maisons et des hotels sur ces cases.\n");
-        printf("(Taper \"2\" apres \"Continuer\" pour connaitre le prix des loyers)\n\n");
-        scanf("%d", &next);
+        switch (choix) {
+            case 0 :
+            {
+                break;
+            }
+            case 1 :
+            {
+                printf("Le Monopoly est un jeu auquel vous pouvez jouer jusqu'a 6 joueurs.\n");
+                printf("Le but est d'etre le dernier joueur a ne pas faire faillite.\n");
+                printf("Vous commencerez avec 150 000 francs et pourrez acheter des proprietes et effectuer des actions pour faire tomber vos\n");
+                printf("adversaires.\n");
+                printf("Lancer vos deux des, avancez du nombre de cases indique sur vos des et faites les bons choix pour mener vos concurrents\n");
+                printf("a la ruine.\n");
+                printf("Les regles de chaque case sont expliquees clairement dans les sections suivantes.\n");
+                break;
+            }
+            case 2 :
+            {
+                printf("Les cases de couleurs sur le plateau sont des proprietes que vous pouvez acheter.\n");
+                printf("Si un joueur tombe sur l'une de vos proprietes, il devra vous payer un loyer different pour chaque case.\n");
+                printf("Vous pouvez regarder le prix des loyers d'une propriete dans les infos concernant les prix des cases.\n");
+                printf("Si vous obtenez toutes les proprietes d'une meme couleur, vous obtiendrez un monopole.\n\n");
 
-        printf("Maison et Hotel :\n");
-        printf("Si vous parvenez a obtenir un monopole sur un terrain, il vous sera possible d'y acheter des maisons.\n");
-        printf("Si vous possedez 4 maisons sur une propriete vous pourrez y acheter un hotel.\n");
-        printf("Vous pouvez aussi decider de vendre vos maisons et vos hotels a tout moment pour la moitie du prix d'achat initial.\n");
-        printf("Attention, il n'y a que 32 maisons et 12 hotels dans le jeu.\n\n");
-        scanf("%d", &next);
+                printf("Avec un monopole le loyer a payer pour les joueurs qui tomberont sur une des proprietes de ce groupe sera double.\n");
+                printf("Le monopole vous permet aussi d'acheter des maisons et des hotels sur les proprietes de ce groupe.\n");
+                printf("Plus il y a de maisons sur une meme case, plus le loyer de cette case sera cher.\n");
+                printf("De plus, lorsque vous aurez 4 maisons sur la meme propriete, il vous sera possible d'y acheter un hotel en remettant\n");
+                printf("les 4 maisons de la propriete en jeu.\n");
+                printf("Il n'y a rien de plus cher qu'un hotel, c'est le plus haut niveau d'amelioration d'une propriete.\n\n");
 
-        printf("Arret sur les services publics :\n");
-        printf("Si vous vous arretez sur un service public, vous pourrez l'acheter si il n'appartient a personne.\n");
-        printf("S'il appartient deja a un autre joueur, vous devrez payer:\n");
-        printf("%d fois le resultat de vos des si le proprietaire ne possede qu'un des services publiques.\n", plateauMonopoly[12].prixMaisonHotel[0]);
-        printf("%d fois le resultat de vos des si le proprietaire possede les deux services publiques.\n\n", plateauMonopoly[12].prixMaisonHotel[1]);
-        scanf("%d", &next);
+                printf("Aucune maison ne peut etre construite sur une propriete si une des proprietes du groupe est hypothequee.\n\n");
 
-        printf("Arret sur une gare :\n");
-        printf("Le loyer a payer si une case gare appartient a un autre joueur dependra du nombre de gare detenu par ce meme joueur.\n\n");
-        scanf("%d", &next);
+                printf("Vous pouvez vendre vos maisons et vos hotels pour la moitie de leur prix d'achat.\n");
+                printf("Les maisons se vendent une par une. Les hotels peuvent etre vendus de 2 manieres differentes :\n");
+                printf("- Vous pouvez vendre seulement l'hotel en le remplacant par 4 maisons s'il reste suffisamment de maison dans le jeu.\n");
+                printf("- Sinon vous pouvez vendre votre hotel et les 4 maisons de votre propriete d'un seul coup.\n\n");
 
-        printf("Carte Chance et Caisse de Communaute :\n");
-        printf("Les cartes Chance et Caisse de Communaute sont melangees aleatoirement et vous demanderons d'effectuer des actions.\n");
-        printf("Elles seront remises \"en dessous du paquet\" apres les avoir pioche sauf les cartes \"Vous etes libere de prison\".\n");
-        printf("Elle reviendront donc dans le meme ordre une fois la pioche fini.\n\n");
-        scanf("%d", &next);
+                printf("Attention, le nombre de maisons et d'hotels sont limitees dans le jeu.\n");
+                printf("Leur nombre est indique en haut a droite du plateau de jeu. Si l'un ou l'autre manque, il faudra attendre qu'un joueur\n");
+                printf("vende des batiments pour en acheter a nouveau.\n");
+                break;
+            }
+            case 3 :
+            {
+                printf("La case numero 10 est la case prison. Un joueur atterrit en prison quand :\n");
+                printf("1. Son jeton atterrit sur la case numero 30 allez en prison notee _-->#_ sur le plateau de jeu.\n");
+                printf("2. Il tire une carte marquee 'aller en prison'. \n");
+                printf("3. Il lance trois fois de suite des doubles.\n\n");
 
-        printf("Arret sur le Parc gratuit :\n");
-        printf("Si vous vous arretez sur cette case, rien ne se passera.\n");
-        printf("Vous pouvez cependant decider d'activer la regle du Parc Gratuit si vous le desirez: \n");
-        printf("Cette regle creera un pot commun dans lequel iront toutes vos taxes payees a la banque.\n");
-        printf("Ce pactole sera recupere par le joueur qui s'arretera sur la case Parc Gratuit.\n");
-        scanf("%d", &next);
+                printf("Lorsqu'un joueur est envoye en prison, son tour se termine.\n");
+                printf("Il ne peut plus se deplacer sur le plateau de jeu tant qu'il n'est pas sorti de prison.\n");
+                printf("Meme s'il est en prison, un joueur peut encore acheter, vendre ou hypothequer une propriete, acheter ou vendre\n");
+                printf("des maisons et des hotels, faire des echanges et percevoir des loyers.\n\n");
 
-        printf("Prison :\n");
-        printf("Votre tour s'arrete quand vous etes envoye en prison.\n");
-        printf("Pour sortir de prison, il faut effectuer une des 3 actions suivantes :\n");
-        printf("Payer une amende de %d francs et jouer au prochain tour.\n", plateauMonopoly[10].prixMaisonHotel[0]);
-        printf("Utiliser une carte \"Vous etes libere de prison\" si vous en possedez une.\n");
-        printf("Attendre en prison pendant trois tours, en lancant les des a chaque tour pour essayer de faire un double:\n");
-        printf("Si vous faites un double, sortez de prison en utilisant ce lancer pour avancer.\n");
-        printf("Si apres les trois tours, vous n'avez pas fait de double, payez %d francs et jouez au prochain tour.\n\n", plateauMonopoly[10].prixMaisonHotel[0]);
-        scanf("%d", &next);
-    }
+                printf("Si un joueur n'est pas envoye en prison mais qu'il atterrit dans le cours normal du jeu sur la case prison numero 10,\n");
+                printf("il est juste en visite, n'encourt aucune penalite, et avance de la maniere habituelle sur son prochain jet.\n\n");
+
+                printf("Un joueur sort de prison lorsqu'il :\n");
+                printf("1. Lance des doubles sur l'un de ses trois tours suivants, s'il reussit a le faire, il avance immediatement du nombre\n");
+                printf("   indiques par son double. Si le joueur ne fait pas de double a son troisieme tour, il doit payer 5 000 francs.\n");
+                printf("   Il sort alors de prison et avance immediatement le nombre de cases indiquees par son jet.\n");
+                printf("2. Utilise la carte 'Sortir de prison gratuitement' s'il en a une.\n");
+                printf("3. Achete la carte 'Sortir de prison gratuitement' d'un autre joueur et la joue.\n");
+                printf("4. Paye une amende de 5 000 francs avant de lancer les des pour jouer.\n");
+                break;
+            }
+            case 4 :
+            {
+                printf("En plus des proprietes, un joueur peut aussi acheter des gares et des cases de services publiques.\n\n");
+
+                printf("Plus un joueur possede de gare, plus les loyers a payer sur celles-ci sont chers.\n");
+                printf("Vous pouvez regarder le prix des loyers d'une gare dans les infos concernant les prix des cases.\n\n");
+
+                printf("Un joueur peut aussi acheter les compagnies de distributions d'electricite et d'eaux. (les cases 12 et 28)\n");
+                printf("Si vous possedez une seule de ces compagnies et qu'un joueur adverse tombe dessus, le loyer a payer sera de\n");
+                printf("400 francs multiplie par le nombre obtenu par la somme de ses deux des.\n");
+                printf("Si vous possedez les deux compagnies, le loyer sera cette fois-ci de 1000 francs fois la somme de ses deux des.\n");
+                break;
+            }
+            case 5 :
+            {
+                printf("Les proprietes non ameliorees, les gares et les compagnies peuvent etre hypothequees en tout temps.\n");
+                printf("Avant qu'une propriete amelioree puisse etre hypothequee, tous les batiments sur toutes les proprietes de son groupe\n");
+                printf("de couleur doivent etre revendus a la Banque a moitie prix.\n");
+                printf("Vous pouvez regarder la valeur de l'hypotheque d'une case dans les infos concernant les prix des cases.\n\n");
+
+                printf("Aucun loyer ne peut etre percu sur les proprietes, les services publics ou les gares hypotheques.\n");
+                printf("Cependant le loyer peut etre percu sur les proprietes non hypothequees du meme groupe de couleur.\n\n");
+
+                printf("Afin de lever l'hypotheque, le proprietaire doit payer a la Banque le prix de l'hypotheque majore d'un interet de 10%%.\n");
+                printf("Toutefois, le proprietaire peut vendre ou echanger cette propriete hypothequee a un autre joueur a un prix convenu.\n");
+                printf("Le nouveau proprietaire peut lever l'hypotheque immediatement en remboursant l'hypotheque plus 10%% d'interets.\n");
+                printf("Sinon il doit payer a la banque un interet de 10 %% lorsqu'il achete/recoit la propriete hypothequee.\n");
+                printf("S'il leve l'hypotheque plus tard, il doit payer un interet additionnel de 10 %% ainsi que le montant de l'hypotheque.\n");
+                break;
+            }
+            case 6 :
+            {
+                printf("Si un joueur lance des doubles, il deplace son jeton comme d'habitude, mais il doit alors relancer les des\n");
+                printf("une deuxieme fois apres avoir effectue sa premiere phase de tour.\n\n");
+
+                printf("Chaque fois qu'un jeton atterrit ou passe par-dessus la case depart, que ce soit en jetant les des ou en tirant\n");
+                printf("une carte, le banquier paie au joueur un salaire de 20 000 francs.\n\n");
+
+                printf("Quand un joueur atterrit sur une case chance ou caisse de communaute, il prend la carte du haut de la pioche indiquee,\n");
+                printf("suit les instructions et retourne la carte face cachee au bas de la pioche.\n");
+                printf("La carte 'Sortir de prison' est conservee jusqu'a ce qu'elle soit utilisee, puis retournee dans son paquet.\n\n");
+
+                printf("Lorsqu'un joueur atterrit sur la case 'Impot' ou 'taxe', il doit payer une amende a la Banque.\n\n");
+
+                printf("Un joueur qui atterrit sur la case parc gratuit ne recoit pas d'argent, de biens ou de recompenses.\n");
+                printf("Ce n'est qu'un lieu de repos 'libre'.\n\n");
+
+                printf("La Banque ne peut preter de l'argent a un joueur qu'en hypothequant un bien immobilier.\n");
+                printf("Aucun joueur ne peut emprunter ou preter de l'argent a un autre joueur.\n");
+                break;
+            }
+            case 7 :
+            {
+                printf("Un joueur est en faillite lorsqu'il doit plus qu'il ne peut payer a un autre joueur ou a la Banque.\n\n");
+
+                printf("Si sa dette est envers un autre joueur, il doit remettre a ce joueur tout ce qu'il a de valeur et se retirer du jeu.\n");
+                printf("Dans ce cadre, s'il est proprietaire de maisons ou d'hotels, il doit les vendre et remettre l'argent au creancier\n");
+                printf("S'il a hypotheque un bien, il remet egalement son bien a ce creancier, mais le nouveau proprietaire doit payer\n");
+                printf("immediatement a la Banque le montant des interets sur le pret, soit 10 %% de la valeur du bien.\n");
+                printf("Une fois que le nouveau proprietaire l'a fait, il peut payer le capital ou resilier l'hypotheque a une date ulterieure.\n\n");
+
+                printf("Si un joueur doit a la Banque, plus que ce qu'il peut payer (en raison de taxes ou de penalites), meme en vendant\n");
+                printf("ses batiments, en hypothequant sa propriete ou en vendant ou en echangeant avec d'autres joueurs,\n");
+                printf("il doit remettre tous ses biens a la Banque.\n");
+                break;
+            }
+            case 8 :
+            {
+                printf("Il existe des regles supplementaires que vous pourrez choisir de jouer ou non en debut de partie :\n\n");
+
+                printf("Case depart double :\n");
+                printf("Cette regle permet de donner 20 000 francs en plus a un joueur qui s’arreterait sur la case depart.\n\n");
+
+                printf("Parc de la fortune :\n");
+                printf("Cette regle permet de faire gagner de l'argent stocke sur la case du parc gratuit au joueur qui s'arretera dessus.\n");
+                printf("Cet argent provient des differents malus des cartes chance et caisse de communaute et des cases taxes et impots.\n");
+                printf("L'argent sera alors remis en jeu sur la case parc gratuit plutot qu'a la banque, et un joueur pourra le recuperer.\n");
+                printf("Il sera affiche en haut a droite sur le plateau de jeu.\n");
+                break;
+            }
+            case 9 :
+            {
+                printf("Dans cette version du Monopoly, il vous sera demande avant chaque debut de tour si vous voulez continuer.\n");
+                printf("Vous devrez alors taper :\n");
+                printf("0 si vous voulez revenir au menu principal.\n");
+                printf("1 si vous voulez continuer le jeu.\n");
+                printf("2 si vous voulez effectuer une autre action (voir les prix des cases, acheter des maisons, hypothequer...\n\n");
+
+                printf("Lorsque qu'une question vous sera posee, le 1 signifiera toujours oui et le 0 non.\n\n");
+
+                printf("Sur le plateau de jeu, la case depart est situe en haut a gauche. C'est la case numero 0.\n");
+                printf("Viens ensuite en parcourant le plateau dans le sens des aiguilles d'une montre la case 1 puis 2 jusqu'a 39.\n");
+                printf("Les 4 coins du plateau representent donc les case 0, 10, 20 et 30 et les 4 gares les cases 5, 15, 25 et 35.\n\n");
+
+                printf("Les groupes de proprietes sont representes par couleur tout autour du plateau.\n");
+                printf("Ces couleurs sont independantes des couleurs des joueurs sur le plateau.\n");
+                printf("Si personne n'a encore achete une de ces cases, le prix sera affiche en dessous de celle-ci (10k pour 10000 francs).\n");
+                printf("Une fois la propriete achetee, il y aura affiche le numero du joueur qui detient cette case a la place.\n");
+                printf("Un M suivit d'un chiffre apparaitrons suivant le nombre de maisons presente sur cette case.\n");
+                printf("Un H apparaitra s'il y a un hotel sur cette case et un X apparaitra si cette case est hypothequee.\n\n");
+
+                printf("Sur le plateau, chaque joueur est represente par un chiffre selon l'ordre dans lequel vous avez enregistre vos noms.\n");
+                printf("Vous pouvez aussi y lire l'argent que vous possedez ainsi que le nombre de maisons et d'hotels encore disponible.\n");
+                printf("Si la regle du parc gratuit est activee, vous pourrez y lire l'argent a recuperer si vous tombez sur la case 'Parc'.\n");
+                break;
+            }
+            default :
+            {
+                printf("Erreur Regle\n");
+                break;
+            }
+        }
+    } while (choix != 0);
 }
 
 void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit) {
@@ -696,7 +824,7 @@ void initialisationDebutSauvegarde(CaseMonopoly plateauMonopoly1[TAILLE_PLATEAU]
         initialisationSauvegarde(plateauMonopoly2, listeJoueur2, &infoChanceCaisse[1], listeVariable2);
         initialisationSauvegarde(plateauMonopoly3, listeJoueur3, &infoChanceCaisse[2], listeVariable3);
 
-        printf("C'est la premiere fois que vous lancez le jeu, un petit tour dans la rubrique aide vous aidera !\n");
+        printf("C'est la premiere fois que vous lancez le jeu, un petit tour dans la rubrique regle vous aidera !\n");
     }
     else {
 
@@ -783,67 +911,67 @@ void enregistrementFinSauvegarde(CaseMonopoly plateauMonopoly1[TAILLE_PLATEAU], 
 
 
     if (fwrite(pSauvegarde1, sizeof(int), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (Sauvegarde 1).\n");
+        printf("Probleme d'ecriture dans le fichier (Sauvegarde 1).\n");
     }
     for (int i = 0; i < TAILLE_PLATEAU; i++) {
         if (fwrite(&plateauMonopoly1[i], sizeof(CaseMonopoly), 1, pfichier) != 1) {
-            printf("Probleme d'écriture dans le fichier (Case numero %d de la sauvegarde 1).\n", i);
+            printf("Probleme d'ecriture dans le fichier (Case numero %d de la sauvegarde 1).\n", i);
         }
     }
     for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
         if (fwrite(&listeJoueur1[i], sizeof(InfoJoueur), 1, pfichier) != 1) {
-            printf("Probleme d'écriture dans le fichier (Joueur numero %d de la sauvegarde 1).\n", i);
+            printf("Probleme d'ecriture dans le fichier (Joueur numero %d de la sauvegarde 1).\n", i);
         }
     }
     if (fwrite(listeVariable1, NOMBRE_VARIABLE * sizeof(int), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (liste des variables de la sauvegarde 1).\n");
+        printf("Probleme d'ecriture dans le fichier (liste des variables de la sauvegarde 1).\n");
     }
     if (fwrite(&infoChanceCaisse[0], sizeof(CarteChanceCaisse), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 1).\n");
+        printf("Probleme d'ecriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 1).\n");
     }
 
 
 
     if (fwrite(pSauvegarde2, sizeof(int), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (Sauvegarde 2).\n");
+        printf("Probleme d'ecriture dans le fichier (Sauvegarde 2).\n");
     }
     for (int i = 0; i < TAILLE_PLATEAU; i++) {
         if (fwrite(&plateauMonopoly2[i], sizeof(CaseMonopoly), 1, pfichier) != 1) {
-            printf("Probleme d'écriture dans le fichier (Case numero %d de la sauvegarde 2).\n", i);
+            printf("Probleme d'ecriture dans le fichier (Case numero %d de la sauvegarde 2).\n", i);
         }
     }
     for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
         if (fwrite(&listeJoueur2[i], sizeof(InfoJoueur), 1, pfichier) != 1) {
-            printf("Probleme d'écriture dans le fichier (Joueur numero %d de la sauvegarde 2).\n", i);
+            printf("Probleme d'ecriture dans le fichier (Joueur numero %d de la sauvegarde 2).\n", i);
         }
     }
     if (fwrite(listeVariable2, NOMBRE_VARIABLE * sizeof(int), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (liste des variables de la sauvegarde 2).\n");
+        printf("Probleme d'ecriture dans le fichier (liste des variables de la sauvegarde 2).\n");
     }
     if (fwrite(&infoChanceCaisse[1], sizeof(CarteChanceCaisse), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 2).\n");
+        printf("Probleme d'ecriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 2).\n");
     }
 
 
 
     if (fwrite(pSauvegarde3, sizeof(int), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (Sauvegarde 3).\n");
+        printf("Probleme d'ecriture dans le fichier (Sauvegarde 3).\n");
     }
     for (int i = 0; i < TAILLE_PLATEAU; i++) {
         if (fwrite(&plateauMonopoly3[i], sizeof(CaseMonopoly), 1, pfichier) != 1) {
-            printf("Probleme d'écriture dans le fichier (Case numero %d de la sauvegarde 3).\n", i);
+            printf("Probleme d'ecriture dans le fichier (Case numero %d de la sauvegarde 3).\n", i);
         }
     }
     for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
         if (fwrite(&listeJoueur3[i], sizeof(InfoJoueur), 1, pfichier) != 1) {
-            printf("Probleme d'écriture dans le fichier (Joueur numero %d de la sauvegarde 3).\n", i);
+            printf("Probleme d'ecriture dans le fichier (Joueur numero %d de la sauvegarde 3).\n", i);
         }
     }
     if (fwrite(listeVariable3, NOMBRE_VARIABLE * sizeof(int), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (liste des variables de la sauvegarde 3).\n");
+        printf("Probleme d'ecriture dans le fichier (liste des variables de la sauvegarde 3).\n");
     }
     if (fwrite(&infoChanceCaisse[2], sizeof(CarteChanceCaisse), 1, pfichier) != 1) {
-        printf("Probleme d'écriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 3).\n");
+        printf("Probleme d'ecriture dans le fichier (carte chance et caisse de communaute de la sauvegarde 3).\n");
     }
 
     fclose(pfichier);

@@ -5,6 +5,8 @@
 
 void viderBuffer();
 void color(int couleurDuTexte,int couleurDeFond);
+void verificationSaisie(int* choix);
+void choixEntier(int* choix, int* liste, int tailleListe);
 
 //Fonction informative
 void affichageInfoCase(int numeroCase, CaseMonopoly tableauMonopoly[TAILLE_PLATEAU]);
@@ -23,6 +25,7 @@ int nombreMaisonJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur)
 int nombreHotelJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur);
 
 //Fonction sur l'achat de maisons et d'hotels
+int maisonHotelGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeCase);
 void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante);
 void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreHotelRestant, int* pNombreMaisonRestante);
 void venteMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante);
@@ -30,6 +33,7 @@ void venteHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
 //Fonction sur l'hypotheque
 int hypothequeGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeCase);
+void hypothequeCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]);
 
 //Fonction sur les cases Chance et Caisse de Communauté
 void randomOrdreCaisseChance(int listeAleatoire[16]);
