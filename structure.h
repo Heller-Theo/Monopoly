@@ -43,4 +43,5 @@ typedef struct {
     int numeroCarteCaisse;
 } CarteChanceCaisse;
 
+
 #endif //PROJETMONOPOLY_STRUCTURE_H
