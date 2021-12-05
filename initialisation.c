@@ -577,11 +577,15 @@ void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
     printf("7) Faillite\n");
     printf("8) Regles optionnelles\n");
     printf("9) Fonctionnement du jeu et des touches\n");
-    viderBuffer();
 
     do {
 
-        choixEntier(&choix, listeChoix10, 10);
+        do {
+            verificationSaisie(&choix);
+            if (choix <0 || choix > 9) {
+                printf("Veuillez saisir un choix valide.\n");
+            }
+        } while (choix <0 || choix > 9);
 
         switch (choix) {
             case 0 :
@@ -766,11 +770,16 @@ void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
 
 void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit) {
 
-    printf("Voulez vous jouer la regle \"Case Depart double\" ?\n");
-    printf("1: Oui\n0: Non\n>");
+    printf("\nVoulez vous jouer la regle \"Case Depart double\" ?\n");
+    printf("1) Oui\n0) Non\n");
+
     do {
-        scanf(" %d", regleDepart);
+        verificationSaisie(regleDepart);
+        if (*regleDepart != 0 && *regleDepart != 1) {
+            printf("Veuillez saisir 0 pour non ou 1 pour oui.\n");
+        }
     } while (*regleDepart !=0 && *regleDepart != 1);
+
     if (*regleDepart) {
         printf("La regle sera donc joue.\n\n");
     }
@@ -779,11 +788,16 @@ void choixRegleSupplementaire(int* regleDepart, int* regleParcGratuit) {
     }
 
 
-    printf("Voulez vous jouer la regle \"Parc Gratuit\" ?\n");
-    printf("1: Oui\n0: Non\n>");
+    printf("\nVoulez vous jouer la regle \"Parc Gratuit\" ?\n");
+    printf("1) Oui\n0) Non\n");
+
     do {
-        scanf(" %d", regleParcGratuit);
+        verificationSaisie(regleParcGratuit);
+        if (*regleParcGratuit != 0 && *regleParcGratuit != 1) {
+            printf("Veuillez saisir 0 pour non ou 1 pour oui.\n");
+        }
     } while (*regleParcGratuit !=0 && *regleParcGratuit != 1);
+
     if (*regleParcGratuit) {
         printf("La regle sera donc joue.\n\n");
     }

@@ -115,10 +115,13 @@ int main() {
         printf("2) Supprimer une sauvegarde\n");
         printf("3) Lire les regles\n");
         printf("4) A propos du jeu\n");
-        printf("5) Quitter\n>");
+        printf("5) Quitter\n");
 
         do {
-            scanf(" %d", &choix);
+            verificationSaisie(&choix);
+            if (choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5) {
+                printf("Veuillez saisir un choix valide.\n");
+            }
         } while(choix != 1 && choix != 2 && choix != 3 && choix != 4 && choix != 5);
 
         if (choix == 1) {
@@ -129,10 +132,13 @@ int main() {
             printf("2) Sauvegarde 2:");
             sauvegarde2 == 0 ? printf(" Vide\n") : printf(" En jeu\n");
             printf("3) Sauvegarde 3:");
-            sauvegarde3 == 0 ? printf(" Vide\n>") : printf(" En jeu\n>");
+            sauvegarde3 == 0 ? printf(" Vide\n") : printf(" En jeu\n");
 
             do {
-                scanf(" %d", &choix);
+                verificationSaisie(&choix);
+                if (choix != 0 && choix != 1 && choix != 2 && choix != 3) {
+                    printf("Veuillez saisir un choix valide.\n");
+                }
             } while(choix != 0 && choix != 1 && choix != 2 && choix != 3);
 
             if (choix == 1) {
@@ -155,10 +161,13 @@ int main() {
             printf("2) Sauvegarde 2:");
             sauvegarde2 == 0 ? printf(" Vide\n") : printf(" En jeu\n");
             printf("3) Sauvegarde 3:");
-            sauvegarde3 == 0 ? printf(" Vide\n>") : printf(" En jeu\n>");
+            sauvegarde3 == 0 ? printf(" Vide\n") : printf(" En jeu\n");
 
             do {
-                scanf(" %d", &choix);
+                verificationSaisie(&choix);
+                if (choix != 0 && choix != 1 && choix != 2 && choix != 3) {
+                    printf("Veuillez saisir un choix valide.\n");
+                }
             } while(choix != 0 && choix != 1 && choix != 2 && choix != 3);
 
             if (choix == 1) {
@@ -191,9 +200,13 @@ int main() {
         if (choix == 5) {
             printf("\nEtes vous sur de vouloir quitter le programme ?\n");
             printf("0) Quitter definitivement\n");
-            printf("1) Continuer\n>");
+            printf("1) Continuer\n");
+
             do {
-                scanf(" %d", &choix);
+                verificationSaisie(&choix);
+                if (choix != 0 && choix != 1) {
+                    printf("Veuillez saisir un choix valide.\n");
+                }
             } while(choix != 0 && choix != 1);
         }
 

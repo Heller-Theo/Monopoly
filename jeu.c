@@ -25,31 +25,33 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
     int potCommun = listeVariable[8];
 
     if (premierJoueur == 0) {
+
         choixRegleSupplementaire(&regleDepart, &regleParcGratuit);
-        printf("Combien de joueur etes vous ? (2 a 6 joueurs possible)\n");
+
+        printf("\nCombien de joueur etes vous ? (2 a 6 joueurs possible)\n");
+
         do {
-            scanf(" %d", &nombreJoueur);
-        } while (nombreJoueur != 2 && nombreJoueur != 3 && nombreJoueur != 4 && nombreJoueur != 5 && nombreJoueur != 6);
+            verificationSaisie(&nombreJoueur);
+            if (nombreJoueur < 1 || nombreJoueur > 6) {
+                printf("Veuillez saisir un nombre de joueur valide.\n");
+            }
+        } while (nombreJoueur < 1 || nombreJoueur > 6);
 
         for (int i = NOMBRE_MAX_JOUEUR; i > nombreJoueur; i--) {
             listeJoueur[i].argentJoueur = 0;
         }
 
-        viderBuffer();
         for (int i = 1; i <= nombreJoueur; i++) {
+            unsigned int len = 0;
             printf("Quel est le nom du joueur %d (%d caracteres max):\n>", i, TAILLE_MAX_NOM_JOUEUR-1);
-            fgets(listeJoueur[i].nomJoueur, TAILLE_MAX_NOM_JOUEUR + 1, stdin);
-            listeJoueur[i].nomJoueur[strlen(listeJoueur[i].nomJoueur) - 1] = '\0';
+            len = strlen(fgets(listeJoueur[i].nomJoueur, TAILLE_MAX_NOM_JOUEUR, stdin));
+            if (len >= 10) {
+                viderBuffer();
+            }
+            else {
+                listeJoueur[i].nomJoueur[strlen(listeJoueur[i].nomJoueur) - 1] = '\0';
+            }
         }
-    }
-
-    listeVariable[0] = regleDepart;
-    listeVariable[1] = regleParcGratuit;
-    listeVariable[3] = nombreJoueur;
-
-    for (int i = 0; i < NOMBRE_MAX_JOUEUR; i++) {
-        printf("Joueur %d:", i);
-        printf("%s\n", listeJoueur[i].nomJoueur);
     }
 
 
@@ -79,23 +81,32 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 listeVariable[8] = potCommun;
                 return joueur;
             }
+
+            listeVariable[0] = regleDepart;
+            listeVariable[1] = regleParcGratuit;
+            listeVariable[2] = doubleDeSuccessif;
+            listeVariable[3] = nombreJoueur;
+            listeVariable[4] = carteLiberePrisonChance;
+            listeVariable[5] = carteLiberePrisonCaisse;
+            listeVariable[6] = nombreMaisonRestante;
+            listeVariable[7] = nombreHotelRestant;
             listeVariable[8] = potCommun;
 
 
-            printf("------------------------------------------------------------------------------\n\n\n");
+            printf("------------------------------------------------------------------------------\n\n");
 
 
             affichagePlateau(plateauMonopoly, listeJoueur, listeVariable);
 
-            printf("C'est a %s de jouer (Joueur %d).\n", listeJoueur[joueur].nomJoueur, joueur);
+            printf("\nC'est a %s de jouer (Joueur %d).\n", listeJoueur[joueur].nomJoueur, joueur);
 
             tirage :
 
             if (listeJoueur[joueur].prison == 0) {
 
                 tirageDeuxDe(&resultatDe, &doubleDe);
-                scanf("%d",&resultatDe);
-                scanf("%d", &doubleDe);
+                verificationSaisie(&resultatDe);
+                verificationSaisie(&doubleDe);
 
                 if (resultatDe + listeJoueur[joueur].caseJoueur >= TAILLE_PLATEAU) {
                     if (!regleDepart || resultatDe + listeJoueur[joueur].caseJoueur != TAILLE_PLATEAU) {
@@ -139,9 +150,11 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                             int choix = 0;
                             printf("Voulez-vous acheter la case %s pour %d francs ?\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
 
-                            viderBuffer();
                             do {
                                 verificationSaisie(&choix);
+                                if (choix != 0 && choix != 1) {
+                                    printf("Veuillez saisir 0 pour non ou 1 pour oui.\n");
+                                }
                             } while (choix != 0 && choix != 1);
 
                             if (choix) {
@@ -281,9 +294,14 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase) {
                             int choix = 0;
                             printf("Voulez-vous acheter la case %s pour %d francs ?\n>", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
+
                             do {
-                                scanf(" %d", &choix);
+                                verificationSaisie(&choix);
+                                if (choix != 0 && choix != 1) {
+                                    printf("Veuillez saisir 0 pour non ou 1 pour oui.\n");
+                                }
                             } while (choix != 0 && choix != 1);
+
                             if (choix) {
                                 plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur = joueur;
                                 listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase;
@@ -572,7 +590,10 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                             printf("2: Tirer une carte Chance\n>");
 
                             do {
-                                scanf(" %d", &choix);
+                                verificationSaisie(&choix);
+                                if (choix != 1 && choix != 2) {
+                                    printf("Veuillez saisir un choix valide.\n");
+                                }
                             } while (choix != 1 && choix != 2);
 
                             if (choix == 1) {
@@ -646,9 +667,14 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase) {
                             int choix = 0;
                             printf("Voulez-vous acheter la case %s pour %d francs ?\n>", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
+
                             do {
-                                scanf(" %d", &choix);
+                                verificationSaisie(&choix);
+                                if (choix != 0 && choix != 1) {
+                                    printf("Veuillez saisir 0 pour non ou 1 pour oui.\n");
+                                }
                             } while (choix != 0 && choix != 1);
+
                             if (choix) {
                                 plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur = joueur;
                                 listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase;
