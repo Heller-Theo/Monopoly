@@ -40,6 +40,9 @@ void venteCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJou
 void randomOrdreCaisseChance(int listeAleatoire[16]);
 void achatCarteLibere(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int listeVariable[NOMBRE_VARIABLE], int joueur);
 
+//Fonction sur la faillite
+void failliteJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int joueur, int numeroCase, int dette, int* pNombreMaisonRestante, int* pNombreHotelRestant);
+
 //Fonction d'affichage
 void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int nombreJoueur);
 void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur, int nombreJoueur);

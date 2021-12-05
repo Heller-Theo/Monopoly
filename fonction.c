@@ -946,6 +946,7 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
     return 1;
 }
 
+
 int nombreGareJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) {
     int i = 0, nombreGare = 0;
     for (i = 5; i < TAILLE_PLATEAU; i += 10) {
@@ -974,6 +975,113 @@ int nombreHotelJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) 
         }
     }
     return nombreHotel;
+}
+
+void failliteJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int joueur, int numeroCase, int dette, int* pNombreMaisonRestante, int* pNombreHotelRestant) {
+    int choix = 0, choix2 = 0, verif = 0, numeroCase2 = 0;
+
+    printf("\nVous devez effectuer des actions pour rembourser votre dette avec le menu Continuer >\n");
+    printf("Si vous avez reussi a trouver l'argent ou que vous voulez abandonner tapez 1.\n");
+    printf("Sinon tapez 2 pour effectuer des actions.\n");
+
+    do {
+        printf("\nVous avez une dette de %d francs et vous avez %d francs.\n", dette, listeJoueur[joueur].argentJoueur);
+
+        checkJeu(plateauMonopoly, listeJoueur, pNombreMaisonRestante, pNombreHotelRestant);
+
+        if (listeJoueur[joueur].argentJoueur < dette) {
+            printf("Vous n'avez toujours pas assez d'argent pour rembourser votre dette.\n");
+            printf("Que voulez vous faire:\n");
+            printf("0) Se mettre en faillite\n");
+            printf("1) Tenter de regler votre dette\n");
+
+            do {
+                verificationSaisie(&choix);
+                if (choix != 0 && choix != 1) {
+                    printf("Veuillez saisir un choix valide.\n");
+                }
+            } while (choix != 0 && choix != 1);
+
+            if (choix == 0) {
+                if (plateauMonopoly[numeroCase].joueurPossesseur != 0) {
+                    for (numeroCase2 = 0; numeroCase2 < TAILLE_PLATEAU; numeroCase2++) {
+                        if (plateauMonopoly[numeroCase2].joueurPossesseur == joueur) {
+                            if (plateauMonopoly[numeroCase2].nombreMaison) {
+                                listeJoueur[joueur].argentJoueur += plateauMonopoly[numeroCase2].prixMaisonHotel[0] * plateauMonopoly[numeroCase2].nombreMaison / 2;
+                                *pNombreMaisonRestante += plateauMonopoly[numeroCase2].nombreMaison;
+                                plateauMonopoly[numeroCase2].nombreMaison = 0;
+                                printf("Les maisons de la case %s ont ete vendu.\n", plateauMonopoly[numeroCase2].nomCase);
+                            }
+                            if (plateauMonopoly[numeroCase2].nombreHotel) {
+                                listeJoueur[joueur].argentJoueur += plateauMonopoly[numeroCase2].prixMaisonHotel[0] * 5 / 2;
+                                plateauMonopoly[numeroCase2].nombreHotel = 0;
+                                *pNombreHotelRestant += 1;
+                                printf("L'hotel de la case %s a ete vendu.\n", plateauMonopoly[numeroCase2].nomCase);
+                            }
+                            if (plateauMonopoly[numeroCase2].hypotheque) {
+                                printf("%s paye %d pour recuperer l'hypotheque de la case %s.\n", listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].nomJoueur,
+                                       plateauMonopoly[numeroCase2].prixCase / 20, plateauMonopoly[numeroCase2].nomCase);
+                                listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur -= plateauMonopoly[numeroCase2].prixCase;
+
+                                printf("Voulez vous payer %d pour lever l'hypotheque ?\n", plateauMonopoly[numeroCase2].prixCase / 2);
+
+                                do {
+                                    verificationSaisie(&choix2);
+                                    if (choix2 != 0 && choix2 != 1) {
+                                        printf("Veuillez saisir 0 pour non et 1 pour oui.\n");
+                                    }
+                                } while (choix2 != 0 && choix2 != 1);
+
+                                if (choix2 == 1) {
+                                    if (listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur >= plateauMonopoly[numeroCase2].prixCase / 2) {
+                                        listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur -= plateauMonopoly[numeroCase2].prixCase / 2;
+                                        plateauMonopoly[numeroCase2].hypotheque = 0;
+                                    }
+                                }
+                            }
+                            plateauMonopoly[numeroCase2].joueurPossesseur = plateauMonopoly[numeroCase].joueurPossesseur;
+                            if (listeJoueur[joueur].argentJoueur >= dette) {
+                                listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur += dette;
+                            }
+                            else {
+                                listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur += listeJoueur[joueur].argentJoueur;
+                            }
+                        }
+                    }
+                }
+                else {
+                    for (numeroCase2 = 0; numeroCase2 < TAILLE_PLATEAU; numeroCase2++) {
+                        if (plateauMonopoly[numeroCase2].joueurPossesseur == joueur) {
+                            if (plateauMonopoly[numeroCase2].nombreMaison) {
+                                *pNombreMaisonRestante += plateauMonopoly[numeroCase2].nombreMaison;
+                                plateauMonopoly[numeroCase2].nombreMaison = 0;
+                                printf("Les maisons de la case %s sont remises en jeu.\n", plateauMonopoly[numeroCase2].nomCase);
+                            }
+                            if (plateauMonopoly[numeroCase2].nombreHotel) {
+                                plateauMonopoly[numeroCase2].nombreHotel = 0;
+                                *pNombreHotelRestant += 1;
+                                printf("L'hotel de la case %s est remis en jeu.\n", plateauMonopoly[numeroCase2].nomCase);
+                            }
+                            if (plateauMonopoly[numeroCase2].hypotheque) {
+                                plateauMonopoly[numeroCase2].hypotheque = 0;
+                            }
+                            plateauMonopoly[numeroCase2].joueurPossesseur = plateauMonopoly[numeroCase].joueurPossesseur;
+                        }
+                    }
+                }
+                listeJoueur[joueur].argentJoueur = -1;
+                return;
+            }
+            if (choix == 1) {
+                verif = 0;
+            }
+        }
+        else {
+            listeJoueur[joueur].argentJoueur -= dette;
+            listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur += dette;
+            verif = 1;
+        }
+    } while (!verif);
 }
 
 void randomOrdreCaisseChance(int listeAleatoire[16]) {
