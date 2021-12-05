@@ -647,7 +647,7 @@ void affichageRegle(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
                 printf("Un joueur sort de prison lorsqu'il :\n");
                 printf("1. Lance des doubles sur l'un de ses trois tours suivants, s'il reussit a le faire, il avance immediatement du nombre\n");
                 printf("   indiques par son double. Si le joueur ne fait pas de double a son troisieme tour, il doit payer 5 000 francs.\n");
-                printf("   Il sort alors de prison et avance immediatement le nombre de cases indiquees par son jet.\n");
+                printf("   Il sort alors de prison et pourra jouer au prochain tour.\n");
                 printf("2. Utilise la carte 'Sortir de prison gratuitement' s'il en a une.\n");
                 printf("3. Achete la carte 'Sortir de prison gratuitement' d'un autre joueur et la joue.\n");
                 printf("4. Paye une amende de 5 000 francs avant de lancer les des pour jouer.\n");

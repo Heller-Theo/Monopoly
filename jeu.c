@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <string.h>
 #include "fonction.h"
 #include "structure.h"
@@ -105,8 +104,8 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
             if (listeJoueur[joueur].prison == 0) {
 
                 tirageDeuxDe(&resultatDe, &doubleDe);
-                verificationSaisie(&resultatDe);
-                verificationSaisie(&doubleDe);
+                //verificationSaisie(&resultatDe);
+                //verificationSaisie(&doubleDe);
 
                 if (resultatDe + listeJoueur[joueur].caseJoueur >= TAILLE_PLATEAU) {
                     if (!regleDepart || resultatDe + listeJoueur[joueur].caseJoueur != TAILLE_PLATEAU) {
@@ -128,7 +127,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
                 deplacementChanceCaisse :
 
-                printf("Vous etes tombe sur la case %s numero: %d\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, listeJoueur[joueur].caseJoueur);
+                printf("Vous etes tombe sur la case %s, numero %d\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, listeJoueur[joueur].caseJoueur);
             }
 
 
@@ -138,7 +137,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 {
                     caseDepart:
                     if (regleDepart) {
-                        printf("Bravo, vous gagnez 2 * %d car vous etes tombe sur la case Depart !\n", plateauMonopoly[0].prixTerrainNu);
+                        printf("\nBravo, vous gagnez 2 * %d car vous etes tombe sur la case Depart !\n", plateauMonopoly[0].prixTerrainNu);
                         listeJoueur[joueur].argentJoueur += 2 * plateauMonopoly[0].prixTerrainNu;
                     }
                     break;
@@ -148,7 +147,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     if (plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur == 0) {
                         if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase) {
                             int choix = 0;
-                            printf("Voulez-vous acheter la case %s pour %d francs ?\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
+                            printf("\nVoulez-vous acheter la case %s pour %d francs ?\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
 
                             do {
                                 verificationSaisie(&choix);
@@ -171,18 +170,18 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     }
                     else {
                         if (plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur == joueur) {
-                            printf("Vous etes sur votre propriete: %s\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase);
+                            printf("\nVous etes sur votre propriete: %s\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase);
                         }
                         else {
                             if (plateauMonopoly[listeJoueur[joueur].caseJoueur].hypotheque == 0) {
                                 if (plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreHotel + plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreMaison == 0) {
                                     if (monopoleCase(plateauMonopoly, plateauMonopoly[listeJoueur[joueur].caseJoueur].numeroGroupeCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur)) {
-                                        printf("Vous payez 2 * %d au joueur %d car il a un monopole sur cette case.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur);
+                                        printf("\nVous payez 2 * %d a %s car ce joueur a un monopole sur cette case.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu, listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].nomJoueur);
                                         listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu * 2;
                                         listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu * 2;
                                     }
                                     else {
-                                        printf("Vous payez %d au joueur %d car il possede cette case.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur);
+                                        printf("\nVous payez %d a %s car ce joueur possede cette case.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu, listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].nomJoueur);
                                         listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu;
                                         listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu;
                                     }
@@ -190,19 +189,19 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                                 else {
                                     if (plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreMaison > 0) {
                                         int prix = plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreMaison];
-                                        printf("Vous payez %d au joueur %d car il a %d maison sur cette case.\n", prix, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur, plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreMaison);
+                                        printf("\nVous payez %d a %s car ce joueur a %d maison sur cette case.\n", prix, listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].nomJoueur, plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreMaison);
                                         listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreMaison];
                                         listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreMaison];
                                     }
                                     if (plateauMonopoly[listeJoueur[joueur].caseJoueur].nombreHotel == 1) {
-                                        printf("Vous payez %d au joueur %d car il a un Hotel sur cette case.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[5], plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur);
+                                        printf("\nVous payez %d a %s car ce joueur a un Hotel sur cette case.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[5], listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].nomJoueur);
                                         listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[5];
                                         listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[5];
                                     }
                                 }
                             }
                             else {
-                                printf("Cette propriete est hypotheque donc vous ne payez aucun loyer.\n");
+                                printf("\nCette propriete est hypotheque donc vous ne payez aucun loyer.\n");
                             }
                         }
                     }
@@ -210,7 +209,6 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 }
                 case 2: //Prison
                 {
-                    viderBuffer();
                     debutPrison :
                     if (listeJoueur[joueur].prison) {
                         int choix = 0;
@@ -284,7 +282,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                     }
                     else {
-                        printf("Vous faites une simple visite de la Prison.\n");
+                        printf("\nVous faites une simple visite de la Prison.\n");
                     }
                     break;
                 }
@@ -293,7 +291,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     if (plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur == 0) {
                         if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase) {
                             int choix = 0;
-                            printf("Voulez-vous acheter la case %s pour %d francs ?\n>", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
+                            printf("\nVoulez-vous acheter la case %s pour %d francs ?\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
 
                             do {
                                 verificationSaisie(&choix);
@@ -316,23 +314,23 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     }
                     else {
                         if (plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur == joueur) {
-                            printf("Vous etes sur votre propriete\n");
+                            printf("\nVous etes sur votre propriete\n");
                         }
                         else {
                             if (plateauMonopoly[listeJoueur[joueur].caseJoueur].hypotheque == 0) {
                                 if (monopoleCase(plateauMonopoly, plateauMonopoly[listeJoueur[joueur].caseJoueur].numeroGroupeCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur)) {
-                                    printf("Vous payez %d * %d francs au joueur %d car il possede le monopole de cette case.\n", resultatDe, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[1], plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur);
+                                    printf("\nVous payez %d * %d francs a %s car ce joueur possede le monopole de cette case.\n", resultatDe, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[1], listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].nomJoueur);
                                     listeJoueur[joueur].argentJoueur -= resultatDe * plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[1];
                                     listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += resultatDe * plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[1];
                                 }
                                 else {
-                                    printf("Vous payez %d * %d francs au joueur %d car il possede cette case.\n", resultatDe, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[0], plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur);
+                                    printf("\nVous payez %d * %d francs a %s car ce joueur possede cette case.\n", resultatDe, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[0], listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].nomJoueur);
                                     listeJoueur[joueur].argentJoueur -= resultatDe * plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[0];
                                     listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += resultatDe * plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[0];
                                 }
                             }
                             else {
-                                printf("Cette propriete est hypotheque donc vous ne payez aucun loyer.\n");
+                                printf("\nCette propriete est hypotheque donc vous ne payez aucun loyer.\n");
                             }
 
                         }
@@ -341,14 +339,14 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 }
                 case 4: //Impot sur le revenu
                 {
-                    printf("Vous payez %d d'impot sur le revenu.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu);
+                    printf("\nVous payez %d d'impot sur le revenu.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu);
                     listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu;
                     potCommun += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu;
                     break;
                 }
                 case 5: //Taxe de luxe
                 {
-                    printf("Vous payez %d de taxe de luxe.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu);
+                    printf("\nVous payez %d de taxe de luxe.\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu);
                     listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu;
                     potCommun += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixTerrainNu;
                     break;
@@ -360,46 +358,46 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     switch (infoChanceCaisse.ordreCarteChance[infoChanceCaisse.numeroCarteChance]) {
                         case 1:
                         {
-                            printf("Vous avez gagne le prix de mots croises et recevez %d francs.\n", infoChanceCaisse.prixCarteChance[0]);
+                            printf("\nVous avez gagne le prix de mots croises et recevez %d francs.\n", infoChanceCaisse.prixCarteChance[0]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteChance[0];
                             break;
                         }
                         case 2:
                         {
-                            printf("Amende pour exces de vitesse, vous payez %d francs.\n", infoChanceCaisse.prixCarteChance[1]);
+                            printf("\nAmende pour exces de vitesse, vous payez %d francs.\n", infoChanceCaisse.prixCarteChance[1]);
                             listeJoueur[joueur].argentJoueur -= infoChanceCaisse.prixCarteChance[1];
                             potCommun += infoChanceCaisse.prixCarteChance[1];
                             break;
                         }
                         case 3:
                         {
-                            printf("La banque vous verse une dividende de %d francs.\n", infoChanceCaisse.prixCarteChance[2]);
+                            printf("\nLa banque vous verse une dividende de %d francs.\n", infoChanceCaisse.prixCarteChance[2]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteChance[2];
                             break;
                         }
                         case 4:
                         {
-                            printf("Votre immeuble et votre pret vous rapportent %d francs.\n", infoChanceCaisse.prixCarteChance[3]);
+                            printf("\nVotre immeuble et votre pret vous rapportent %d francs.\n", infoChanceCaisse.prixCarteChance[3]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteChance[3];
                             break;
                         }
                         case 5:
                         {
-                            printf("Amende pour ivresse, vous payez %d francs.\n", infoChanceCaisse.prixCarteChance[4]);
+                            printf("\nAmende pour ivresse, vous payez %d francs.\n", infoChanceCaisse.prixCarteChance[4]);
                             listeJoueur[joueur].argentJoueur -= infoChanceCaisse.prixCarteChance[4];
                             potCommun += infoChanceCaisse.prixCarteChance[4];
                             break;
                         }
                         case 6:
                         {
-                            printf("Vos frais de scolarite vous coutent %d francs.\n", infoChanceCaisse.prixCarteChance[5]);
+                            printf("\nVos frais de scolarite vous coutent %d francs.\n", infoChanceCaisse.prixCarteChance[5]);
                             listeJoueur[joueur].argentJoueur -= infoChanceCaisse.prixCarteChance[5];
                             potCommun += infoChanceCaisse.prixCarteChance[5];
                             break;
                         }
                         case 7:
                         {
-                            printf("Faites des reparations dans toutes vos maisons :\n");
+                            printf("\nFaites des reparations dans toutes vos maisons :\n");
                             printf("%d francs / Maison\n", infoChanceCaisse.prixCarteChance[6]);
                             printf("%d francs / Hotel\n", infoChanceCaisse.prixCarteChance[7]);
 
@@ -414,7 +412,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         case 8:
                         {
-                            printf("Vous etes impose pour les reparations de voirie a raison de :\n");
+                            printf("\nVous etes impose pour les reparations de voirie a raison de :\n");
                             printf("%d francs / Maison\n", infoChanceCaisse.prixCarteChance[8]);
                             printf("%d francs / Hotel\n", infoChanceCaisse.prixCarteChance[9]);
 
@@ -429,24 +427,24 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         case 9:
                         {
-                            printf("Avancez jusqu'a la case Depart.\n");
+                            printf("\nAvancez jusqu'a la case Depart.\n");
                             listeJoueur[joueur].caseJoueur = 0;
                             goto caseDepart;
                         }
                         case 10:
                         {
-                            printf("Rendez vous a la Rue de la Paix.\n");
+                            printf("\nRendez vous a la Rue de la Paix.\n");
                             listeJoueur[joueur].caseJoueur = 39;
                             goto deplacementChanceCaisse;
                         }
                         case 11:
                         {
-                            printf("Allez en prison.\n");
+                            printf("\nAllez en prison.\n");
                             goto prison;
                         }
                         case 12:
                         {
-                            printf("Allez a la gare de Lyon.\n");
+                            printf("\nAllez a la gare de Lyon.\n");
                             if (listeJoueur[joueur].caseJoueur > 15) {
                                 listeJoueur[joueur].argentJoueur += plateauMonopoly[0].prixTerrainNu;
                                 printf("Vous recuperez %d francs pour avoir fait un tour complet.\n", plateauMonopoly[0].prixTerrainNu);
@@ -456,7 +454,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         case 13:
                         {
-                            printf("Rendez vous Avenue Henri-Martin.\n");
+                            printf("\nRendez vous Avenue Henri-Martin.\n");
                             if (listeJoueur[joueur].caseJoueur > 24) {
                                 listeJoueur[joueur].argentJoueur += plateauMonopoly[0].prixTerrainNu;
                                 printf("Vous recuperez %d francs pour avoir fait un tour complet.\n", plateauMonopoly[0].prixTerrainNu);
@@ -466,7 +464,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         case 14:
                         {
-                            printf("Avancez au Boulevard de la Villette.\n");
+                            printf("\nAvancez au Boulevard de la Villette.\n");
                             if (listeJoueur[joueur].caseJoueur > 11) {
                                 listeJoueur[joueur].argentJoueur += plateauMonopoly[0].prixTerrainNu;
                                 printf("Vous recuperez %d francs pour avoir fait un tour complet.\n", plateauMonopoly[0].prixTerrainNu);
@@ -476,7 +474,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         case 15:
                         {
-                            printf("Reculez de 3 cases.\n");
+                            printf("\nReculez de 3 cases.\n");
                             if (listeJoueur[joueur].caseJoueur > 3) {
                                 listeJoueur[joueur].caseJoueur = listeJoueur[joueur].caseJoueur - 3;
                             }
@@ -488,7 +486,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         case 16:
                         {
                             if (carteLiberePrisonChance) {
-                                printf("Vous recevez une carte vous etes libere de prison\n");
+                                printf("\nVous recevez une carte vous etes libere de prison\n");
                                 listeJoueur[joueur].carteLiberePrison += 1;
                                 carteLiberePrisonChance = 0;
                             }
@@ -499,7 +497,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         default:
                         {
-                            printf("---------------PROBLEME2---------------\n");
+                            printf("---------------PROBLEME CHANCE---------------\n");
                             break;
                         }
                     }
@@ -512,70 +510,70 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     switch (infoChanceCaisse.ordreCarteCaisse[infoChanceCaisse.numeroCarteCaisse]) {
                         case 1:
                         {
-                            printf("Vous heritez %d francs.\n", infoChanceCaisse.prixCarteCaisse[0]);
+                            printf("\nVous heritez %d francs.\n", infoChanceCaisse.prixCarteCaisse[0]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[0];
                             break;
                         }
                         case 2:
                         {
-                            printf("Les contributions vous remboursent la somme de %d francs.\n", infoChanceCaisse.prixCarteCaisse[1]);
+                            printf("\nLes contributions vous remboursent la somme de %d francs.\n", infoChanceCaisse.prixCarteCaisse[1]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[1];
                             break;
                         }
                         case 3:
                         {
-                            printf("Payez a l'hopital %d francs.\n", infoChanceCaisse.prixCarteCaisse[2]);
+                            printf("\nPayez a l'hopital %d francs.\n", infoChanceCaisse.prixCarteCaisse[2]);
                             listeJoueur[joueur].argentJoueur -= infoChanceCaisse.prixCarteCaisse[2];
                             potCommun += infoChanceCaisse.prixCarteCaisse[2];
                             break;
                         }
                         case 4:
                         {
-                            printf("Payez votre police d'assurance s'elevant a %d francs.\n", infoChanceCaisse.prixCarteCaisse[3]);
+                            printf("\nPayez votre police d'assurance s'elevant a %d francs.\n", infoChanceCaisse.prixCarteCaisse[3]);
                             listeJoueur[joueur].argentJoueur -= infoChanceCaisse.prixCarteCaisse[3];
                             potCommun += infoChanceCaisse.prixCarteCaisse[3];
                             break;
                         }
                         case 5:
                         {
-                            printf("La vente de votre stock vous rapporte %d francs.\n", infoChanceCaisse.prixCarteCaisse[4]);
+                            printf("\nLa vente de votre stock vous rapporte %d francs.\n", infoChanceCaisse.prixCarteCaisse[4]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[4];
                             break;
                         }
                         case 6:
                         {
-                            printf("Erreur de la banque en votre faveur, recevez %d francs.\n", infoChanceCaisse.prixCarteCaisse[5]);
+                            printf("\nErreur de la banque en votre faveur, recevez %d francs.\n", infoChanceCaisse.prixCarteCaisse[5]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[5];
                             break;
                         }
                         case 7:
                         {
-                            printf("Recevez votre interet sur l'emprunt a 7 pourcents: %d francs.\n", infoChanceCaisse.prixCarteCaisse[6]);
+                            printf("\nRecevez votre interet sur l'emprunt a 7 pourcents: %d francs.\n", infoChanceCaisse.prixCarteCaisse[6]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[6];
                             break;
                         }
                         case 8:
                         {
-                            printf("Recevez votre revenu annuel: %d francs.\n", infoChanceCaisse.prixCarteCaisse[7]);
+                            printf("\nRecevez votre revenu annuel: %d francs.\n", infoChanceCaisse.prixCarteCaisse[7]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[7];
                             break;
                         }
                         case 9:
                         {
-                            printf("Payez la note du medecin: %d francs.\n", infoChanceCaisse.prixCarteCaisse[8]);
+                            printf("\nPayez la note du medecin: %d francs.\n", infoChanceCaisse.prixCarteCaisse[8]);
                             listeJoueur[joueur].argentJoueur -= infoChanceCaisse.prixCarteCaisse[8];
                             potCommun += infoChanceCaisse.prixCarteCaisse[8];
                             break;
                         }
                         case 10:
                         {
-                            printf("Vous avez gagne le deuxieme prix de beaute, recevez %d francs.\n", infoChanceCaisse.prixCarteCaisse[9]);
+                            printf("\nVous avez gagne le deuxieme prix de beaute, recevez %d francs.\n", infoChanceCaisse.prixCarteCaisse[9]);
                             listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[9];
                             break;
                         }
                         case 11:
                         {
-                            printf("C'est votre anniversaire, chaque joueur doit vous donner %d francs.\n", infoChanceCaisse.prixCarteCaisse[10]);
+                            printf("\nC'est votre anniversaire, chaque joueur doit vous donner %d francs.\n", infoChanceCaisse.prixCarteCaisse[10]);
                             for(int i = 1; i <= nombreJoueur; i++) {
                                 listeJoueur[joueur].argentJoueur += infoChanceCaisse.prixCarteCaisse[10];
                                 listeJoueur[i].argentJoueur -= infoChanceCaisse.prixCarteCaisse[10];
@@ -585,9 +583,9 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         case 12:
                         {
                             int choix = 0;
-                            printf("Payez une amende de %d francs ou bien tirez une carte Chance: \n", infoChanceCaisse.prixCarteCaisse[11]);
+                            printf("\nPayez une amende de %d francs ou bien tirez une carte Chance: \n", infoChanceCaisse.prixCarteCaisse[11]);
                             printf("1: Payez l'amende\n");
-                            printf("2: Tirer une carte Chance\n>");
+                            printf("2: Tirer une carte Chance\n");
 
                             do {
                                 verificationSaisie(&choix);
@@ -609,25 +607,25 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         case 13:
                         {
-                            printf("Allez en prison.\n");
+                            printf("\nAllez en prison.\n");
                             goto prison;
                         }
                         case 14:
                         {
-                            printf("Retournez a Belleville.\n");
+                            printf("\nRetournez a Belleville.\n");
                             listeJoueur[joueur].caseJoueur = 1;
                             goto deplacementChanceCaisse;
                         }
                         case 15:
                         {
-                            printf("Placez vous sur la case Depart.\n");
+                            printf("\nPlacez vous sur la case Depart.\n");
                             listeJoueur[joueur].caseJoueur = 0;
                             goto caseDepart;
                         }
                         case 16:
                         {
                             if (carteLiberePrisonCaisse) {
-                                printf("Vous recevez une carte vous etes libere de prison\n");
+                                printf("\nVous recevez une carte vous etes libere de prison\n");
                                 listeJoueur[joueur].carteLiberePrison += 1;
                                 carteLiberePrisonCaisse = 0;
                             }
@@ -638,7 +636,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                         }
                         default:
                         {
-                            printf("---------------PROBLEME3---------------\n");
+                            printf("---------------PROBLEME CAISSE---------------\n");
                             break;
                         }
                     }
@@ -647,7 +645,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 case 8: //Park Gratuit
                 {
                     if (regleParcGratuit) {
-                        printf("Felicitation vous recuperez %d francs des differentes taxes.\n", potCommun);
+                        printf("\nFelicitation vous recuperez %d francs des differentes taxes.\n", potCommun);
                         listeJoueur[joueur].argentJoueur += potCommun;
                         potCommun = 0;
                     }
@@ -658,7 +656,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     prison:
                     listeJoueur[joueur].caseJoueur = 10;
                     listeJoueur[joueur].prison = 1;
-                    printf("Vous etes donc sur la case prison.\n");
+                    printf("Vous etes donc sur la case Prison, numero %d.\n", listeJoueur[joueur].caseJoueur);
                     break;
                 }
                 case 10: //Gare
@@ -666,7 +664,7 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     if (plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur == 0) {
                         if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase) {
                             int choix = 0;
-                            printf("Voulez-vous acheter la case %s pour %d francs ?\n>", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
+                            printf("\nVoulez-vous acheter la case %s pour %d francs ?\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase, plateauMonopoly[listeJoueur[joueur].caseJoueur].prixCase);
 
                             do {
                                 verificationSaisie(&choix);
@@ -686,18 +684,18 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                     }
                     else {
                         if (plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur == joueur) {
-                            printf("Vous etes sur votre propriete: %s\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase);
+                            printf("\nVous etes sur votre propriete: %s\n", plateauMonopoly[listeJoueur[joueur].caseJoueur].nomCase);
                         }
                         else {
                             if (plateauMonopoly[listeJoueur[joueur].caseJoueur].hypotheque == 0) {
                                 int possesseur = plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur;
                                 int argent = plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[nombreGareJoueur(plateauMonopoly, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur)];
                                 listeJoueur[joueur].argentJoueur -= plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[nombreGareJoueur(plateauMonopoly, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur)];
-                                listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[nombreGareJoueur(plateauMonopoly, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur)];
-                                printf("Vous payez %d francs au joueur %d car il possede %d gare(s).\n", argent, possesseur, nombreGareJoueur(plateauMonopoly, plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur) );
+                                listeJoueur[plateauMonopoly[listeJoueur[joueur].caseJoueur].joueurPossesseur].argentJoueur += plateauMonopoly[listeJoueur[joueur].caseJoueur].prixMaisonHotel[nombreGareJoueur(plateauMonopoly, possesseur)];
+                                printf("\nVous payez %d francs a %s car ce joueur possede %d gare(s).\n", argent, listeJoueur[possesseur].nomJoueur, nombreGareJoueur(plateauMonopoly, possesseur) );
                             }
                             else {
-                                printf("Cette propriete est hypotheque donc vous ne payez aucun loyer.\n");
+                                printf("\nCette propriete est hypotheque donc vous ne payez aucun loyer.\n");
                             }
                         }
                     }
@@ -710,15 +708,14 @@ int jeuMonopoly(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
                 }
             }
 
-            printf("%s possede %d francs.\n", listeJoueur[joueur].nomJoueur, listeJoueur[joueur].argentJoueur);
+            printf("\n%s possede %d francs.\n", listeJoueur[joueur].nomJoueur, listeJoueur[joueur].argentJoueur);
 
             if (doubleDe && listeJoueur[joueur].prison == 0) {
                 doubleDeSuccessif += 1;
-                printf("Vous avez fait un double, vous pouvez donc rejouer !\n");
+                printf("\nVous avez fait un double, vous pouvez donc rejouer !\n");
                 goto tirage;
             }
             doubleDeSuccessif = 0;
-
         }
     }
 }

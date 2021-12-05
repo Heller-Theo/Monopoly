@@ -120,7 +120,7 @@ void affichagePrixCase(int numeroCase, CaseMonopoly plateauMonopoly[TAILLE_PLATE
 void affichageInfoJoueur(int numeroJoueur, InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
     printf("Joueur numero %d\n", numeroJoueur);
     printf("Argent: %d\n", listeJoueur[numeroJoueur].argentJoueur);
-    printf("Carte Libere de Prison: %d\n", listeJoueur[numeroJoueur].carteLiberePrison);
+    printf("Nombre de carte Libere de Prison: %d\n", listeJoueur[numeroJoueur].carteLiberePrison);
 }
 
 void affichagePossessionJoueur(int numeroJoueur, CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
@@ -136,7 +136,12 @@ void affichagePossessionJoueur(int numeroJoueur, CaseMonopoly plateauMonopoly[TA
                     printf("%s (%d Hotel)\n", plateauMonopoly[i].nomCase, plateauMonopoly[i].nombreHotel);
                 }
                 else {
-                    printf("%s\n", plateauMonopoly[i].nomCase);
+                    if (plateauMonopoly[i].hypotheque == 1) {
+                        printf("%s (hypotheque)\n", plateauMonopoly[i].nomCase);
+                    }
+                    else {
+                        printf("%s\n", plateauMonopoly[i].nomCase);
+                    }
                 }
             }
         }
@@ -1041,7 +1046,6 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
     }
 
     printf("|");
-    return;
 }
 
 
@@ -1088,8 +1092,6 @@ void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numero
     else {
         printf("       ");
     }
-
-    return;
 }
 
 void affichageNomJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur, int nombreJoueur) {
@@ -1105,7 +1107,6 @@ void affichageNomJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJou
     else {
         printf("           ");
     }
-
 }
 
 void affichageCasePropriete(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroCase) {
