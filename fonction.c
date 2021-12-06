@@ -6,6 +6,9 @@
 #include "initialisation.h"
 #include <ctype.h>
 
+
+
+
 void viderBuffer() {
     char c;
     do {
@@ -13,8 +16,10 @@ void viderBuffer() {
     } while (c != '\n' && c != EOF);
 }
 
-void verificationSaisie(int* choix) {
 
+
+
+void verificationSaisie(int* choix) {
     int valide = 0, i = 0;
     unsigned int len = 0;
     char s[MAX_CARACT_LIGNE];
@@ -26,6 +31,7 @@ void verificationSaisie(int* choix) {
         fgets(s, sizeof(s), stdin);
         len = strlen(s);
 
+        //On supprime les espaces de la selection
         while (len > 0 && isspace(s[len - 1])) {
             len--;
         }
@@ -35,12 +41,14 @@ void verificationSaisie(int* choix) {
             valide = 1;
             for (i = 0; i < len; ++i)
             {
+                //Si un des caractères n'est pas un nombre l'entrée n'est plus valide
                 if (!isdigit(s[i]))
                 {
                     valide = 0;
                     break;
                 }
             }
+            //On convertit la chaine de caractère en entier
             *choix = atoi(s);
         }
         if (!valide) {
@@ -49,11 +57,18 @@ void verificationSaisie(int* choix) {
     } while (!valide);
 }
 
+
+
+
 void color(int couleurDuTexte,int couleurDeFond) // fonction d'affichage de couleurs
 {
-    HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
+    //On change la couleur du texte et du fond:
+    HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H,couleurDeFond*16+couleurDuTexte);
 }
+
+
+
 
 void affichageInfoCase(int numeroCase, CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
     printf("Case numero %d: %s\n", numeroCase, plateauMonopoly[numeroCase].nomCase);
@@ -63,8 +78,12 @@ void affichageInfoCase(int numeroCase, CaseMonopoly plateauMonopoly[TAILLE_PLATE
     printf("Hypotheque: %d\n", plateauMonopoly[numeroCase].hypotheque);
 }
 
+
+
+
 void affichagePrixCase(int numeroCase, CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
     int i = 0;
+    //En fonction de la case, on affiche tout ce qu'il faut savoir sur les prix.
     if (numeroCase == 0) {
         printf("Case %d: %s\n", numeroCase, plateauMonopoly[numeroCase].nomCase);
         printf("La Case Depart vous donnera %d francs une fois franchie.\n", plateauMonopoly[numeroCase].prixTerrainNu);
@@ -117,25 +136,37 @@ void affichagePrixCase(int numeroCase, CaseMonopoly plateauMonopoly[TAILLE_PLATE
     }
 }
 
+
+
+
 void affichageInfoJoueur(int numeroJoueur, InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
     printf("Joueur numero %d\n", numeroJoueur);
+    printf("Nom joueur: %s\n", listeJoueur[numeroJoueur].nomJoueur);
     printf("Argent: %d\n", listeJoueur[numeroJoueur].argentJoueur);
     printf("Nombre de carte Libere de Prison: %d\n", listeJoueur[numeroJoueur].carteLiberePrison);
 }
 
+
+
+
 void affichagePossessionJoueur(int numeroJoueur, CaseMonopoly plateauMonopoly[TAILLE_PLATEAU]) {
     int i = 0;
+
     printf("Le joueur %d possede :\n", numeroJoueur);
+
     for(i = 0; i < TAILLE_PLATEAU; i++) {
         if (plateauMonopoly[i].joueurPossesseur == numeroJoueur) {
+            //Si il possède des maisons sur cette case on l'indique.
             if (plateauMonopoly[i].nombreMaison > 0) {
                 printf("%s (%d maison(s))\n", plateauMonopoly[i].nomCase, plateauMonopoly[i].nombreMaison);
             }
             else {
+                //Si il possède un hotel sur cette case on l'indique
                 if (plateauMonopoly[i].nombreHotel == 1) {
                     printf("%s (%d Hotel)\n", plateauMonopoly[i].nomCase, plateauMonopoly[i].nombreHotel);
                 }
                 else {
+                    //Si cette case est hypothéquée on l'indique.
                     if (plateauMonopoly[i].hypotheque == 1) {
                         printf("%s (hypotheque)\n", plateauMonopoly[i].nomCase);
                     }
@@ -149,7 +180,11 @@ void affichagePossessionJoueur(int numeroJoueur, CaseMonopoly plateauMonopoly[TA
 }
 
 
+
+
 void tirageDeuxDe(int* pResultat, int* pDoubleDe) {
+    //On tire deux dé de 6 aléatoirement et on renvoie leur somme.
+    //Si on a fait un double on renvoie 1 dans la variable *pDoubleDe , 0 sinon.
     int tirage1 = rand() % 6 + 1;
     int tirage2 = rand() % 6 + 1;
     printf("Vous avez eu un %d et un %d.\n", tirage1, tirage2);
@@ -157,8 +192,12 @@ void tirageDeuxDe(int* pResultat, int* pDoubleDe) {
     *pResultat = tirage1 + tirage2;
 }
 
+
+
+
 int monopoleCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeCase, int joueur) {
     int i = 0, monopole = 1;
+    //Si une des cases d'un groupe n'appartient pas au joueur "joueur" alors il n'a pas le monopole sur ce groupe.
     for (i = 0; i < TAILLE_PLATEAU; i++) {
         if (plateauMonopoly[i].numeroGroupeCase == numeroGroupeCase) {
             if (plateauMonopoly[i].joueurPossesseur != joueur) {
@@ -169,8 +208,54 @@ int monopoleCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeC
     return monopole;
 }
 
+
+
+
+int nombreGareJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) {
+    int i = 0, nombreGare = 0;
+    //On compte sur les 4 cases gares lesquelles sont au joueur "joueur".
+    for (i = 5; i < TAILLE_PLATEAU; i += 10) {
+        if (plateauMonopoly[i].joueurPossesseur == joueur) {
+            nombreGare += 1;
+        }
+    }
+    return nombreGare;
+}
+
+
+
+
+int nombreMaisonJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) {
+    int i = 0, nombreMaison = 0;
+    //On compte sur chaque case qui appartient au joueur "joueur" combien il y a de maison.
+    for (i = 0; i <TAILLE_PLATEAU; i++) {
+        if (plateauMonopoly[i].joueurPossesseur == joueur) {
+            nombreMaison += plateauMonopoly[i].nombreMaison;
+        }
+    }
+    return nombreMaison;
+}
+
+
+
+
+int nombreHotelJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) {
+    int i = 0, nombreHotel = 0;
+    //On compte sur chaque case qui appartient au joueur "joueur" combien il y a d'hotel.
+    for (i = 0; i < TAILLE_PLATEAU; i++) {
+        if (plateauMonopoly[i].joueurPossesseur == joueur) {
+            nombreHotel += plateauMonopoly[i].nombreHotel;
+        }
+    }
+    return nombreHotel;
+}
+
+
+
+
 int hypothequeGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeCase) {
     int i = 0, hypotheque = 0;
+    //On regarde si au moins une des cases du groupe est une case hypothéquée.
     for (i = 0; i < TAILLE_PLATEAU; i++) {
         if (plateauMonopoly[i].numeroGroupeCase == numeroGroupeCase) {
             if (plateauMonopoly[i].hypotheque) {
@@ -181,8 +266,12 @@ int hypothequeGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGro
     return hypotheque;
 }
 
+
+
+
 int maisonHotelGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGroupeCase) {
     int i = 0, maisonHotel = 0;
+    //On regarde si au moins une des cases du groupe possède un battiment quelconque.
     for (i = 0; i < TAILLE_PLATEAU; i++) {
         if (plateauMonopoly[i].numeroGroupeCase == numeroGroupeCase) {
             if (plateauMonopoly[i].nombreMaison || plateauMonopoly[i].nombreHotel) {
@@ -193,9 +282,13 @@ int maisonHotelGroupe(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroGr
     return maisonHotel;
 }
 
+
+
+
 void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante) {
     int joueur = 0, groupePropriete = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
 
+    //Tant qu'il reste des maisons en jeu :
     if ( *pNombreMaisonRestante > 0) {
 
         printf("\nQuel joueur veux acheter des maisons ?\n");
@@ -209,11 +302,19 @@ void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
 
         printf("\nVous pouvez acheter des maisons sur les cases suivantes :\n");
         for (groupePropriete = 1; groupePropriete <= 8 ; groupePropriete++) {
+
+            //Si on a le monopole sur ce groupe
             if (monopoleCase(plateauMonopoly, groupePropriete, joueur) ) {
+
+                //Si il n'y a pas de cases hypothéquées sur ce groupe
                 if (!hypothequeGroupe(plateauMonopoly, groupePropriete)) {
                     for (numeroCase = 0; numeroCase < TAILLE_PLATEAU; numeroCase++) {
                         if (plateauMonopoly[numeroCase].numeroGroupeCase == groupePropriete) {
+
+                            //Si sur les cases de ce groupes il n'y a pas d'hotel et moins de 4 maisons
                             if (plateauMonopoly[numeroCase].nombreHotel == 0 && plateauMonopoly[numeroCase].nombreMaison < 4) {
+
+                                //Alors on peux acheter une maison sur cette case.
                                 printf("%d) %s (%d francs)\n", numeroCase, plateauMonopoly[numeroCase].nomCase, plateauMonopoly[numeroCase].prixMaisonHotel[0]);
                                 auMoinsUnChoix += 1;
                             }
@@ -222,12 +323,14 @@ void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
                 }
             }
         }
+
         if (!auMoinsUnChoix) {
             printf("Aucune\n");
             return;
         }
         printf("0) Retour\n");
 
+        //On selectionne sur quelle case on veut acheter une maison
         do {
             verificationSaisie(&choix);
             if (choix < 0 || choix > 39) {
@@ -239,10 +342,13 @@ void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
         if (choix == 0) {
             return;
         }
+
+        //On exclut les cases de compagnie des eaux et d'electricité.
         if (choix == 12 || choix == 28) {
             printf("Vous ne pouvez pas acheter de maison sur cette case.\n");
             return;
         }
+
         if (monopoleCase(plateauMonopoly, plateauMonopoly[choix].numeroGroupeCase, joueur)) {
             if (!hypothequeGroupe(plateauMonopoly, plateauMonopoly[choix].numeroGroupeCase)) {
                 if (plateauMonopoly[choix].nombreHotel == 0 && plateauMonopoly[choix].nombreMaison < 4) {
@@ -272,13 +378,15 @@ void achatMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
     else {
         printf("Il n'y a plus assez de Maison dans le jeu.\n");
     }
-
-
 }
+
+
+
 
 void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreHotelRestant, int* pNombreMaisonRestante) {
     int joueur = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
 
+    //Tant qu'il reste des hotels en jeu :
     if ( *pNombreHotelRestant > 0) {
 
         printf("\nQuel joueur veux acheter des hotels ?\n");
@@ -292,19 +400,27 @@ void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
         printf("\nVous pouvez acheter des hotels sur les cases suivantes :\n");
         for (numeroCase = 0; numeroCase < TAILLE_PLATEAU; numeroCase++) {
+
+            //Si cette case nous appartient
             if (plateauMonopoly[numeroCase].joueurPossesseur == joueur) {
+
+                //Si il y a deja 4 maisons sur cette case
                 if (plateauMonopoly[numeroCase].nombreMaison == 4) {
+
+                    //Alors on peut acheter un hotel dessus.
                     printf("%d) %s (%d francs)\n", numeroCase, plateauMonopoly[numeroCase].nomCase, plateauMonopoly[numeroCase].prixMaisonHotel[0]);
                     auMoinsUnChoix += 1;
                 }
             }
         }
+
         if (!auMoinsUnChoix) {
             printf("Aucune\n");
             return;
         }
         printf("0) Retour\n");
 
+        //On selectionne sur quelle case on veut acheter un hotel.
         do {
             verificationSaisie(&choix);
             if (choix < 0 || choix > 39) {
@@ -315,6 +431,7 @@ void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
         if (choix == 0) {
             return;
         }
+
         if (plateauMonopoly[choix].joueurPossesseur == joueur) {
             if (plateauMonopoly[choix].nombreMaison == 4) {
                 if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[choix].prixMaisonHotel[0]) {
@@ -345,6 +462,8 @@ void achatHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 }
 
 
+
+
 void venteMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante) {
     int joueur = 0, choix = 0, choix2 = 0, numeroCase = 0, auMoinsUnChoix = 0;
 
@@ -359,19 +478,27 @@ void venteMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
 
     printf("\nVous pouvez vendre des maisons sur les cases suivantes :\n");
     for (numeroCase = 0; numeroCase < TAILLE_PLATEAU; numeroCase++) {
+
+        //Si cette case nous appartient
         if (plateauMonopoly[numeroCase].joueurPossesseur == joueur) {
+
+            //Si il y a au moins une maison sur cette case
             if (plateauMonopoly[numeroCase].nombreMaison >= 1) {
+
+                //Alors on peut vendre une maison sur cette case.
                 printf("%d) %s (%d francs)\n", numeroCase, plateauMonopoly[numeroCase].nomCase, plateauMonopoly[numeroCase].prixMaisonHotel[0] / 2);
                 auMoinsUnChoix += 1;
             }
         }
     }
+
     if (!auMoinsUnChoix) {
         printf("Aucune\n");
         return;
     }
     printf("0) Retour\n");
 
+    //On selectionne sur quelle case on veut vendre une maison.
     do {
         verificationSaisie(&choix);
         if (choix < 0 || choix > 39) {
@@ -402,6 +529,7 @@ void venteMaison(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJ
 
 
 
+
 void venteHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreHotelRestant, int* pNombreMaisonRestante) {
     int joueur = 0, choix = 0, choix2 = 0, numeroCase = 0, auMoinsUnChoix = 0;
 
@@ -416,19 +544,27 @@ void venteHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
     printf("\nVous pouvez vendre des hotels sur les cases suivantes :\n");
     for (numeroCase = 0; numeroCase < TAILLE_PLATEAU; numeroCase++) {
+
+        //Si cette case nous appartient
         if (plateauMonopoly[numeroCase].joueurPossesseur == joueur) {
+
+            //Si il y a un hotel sur cette case
             if (plateauMonopoly[numeroCase].nombreHotel == 1) {
+
+                //Alors on peut vendre cet hotel
                 printf("%d) %s (%d francs)\n", numeroCase, plateauMonopoly[numeroCase].nomCase, plateauMonopoly[numeroCase].prixMaisonHotel[0] / 2);
                 auMoinsUnChoix += 1;
             }
         }
     }
+
     if (!auMoinsUnChoix) {
         printf("Aucune\n");
         return;
     }
     printf("0) Retour\n");
 
+    //On selectionne sur quelle case on veut vendre un hotel.
     do {
         verificationSaisie(&choix);
         if (choix < 0 || choix > 39) {
@@ -442,6 +578,7 @@ void venteHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
     if (plateauMonopoly[choix].joueurPossesseur == joueur) {
         if (plateauMonopoly[choix].nombreHotel == 1) {
+
             printf("\nVoulez vous vendre votre hotel et les 4 maisons ou seulement l'hotel ?\n");
             printf("1) Tout vendre pour %d francs\n", plateauMonopoly[choix].prixMaisonHotel[0] * 5 / 2);
             printf("2) Vendre seulement l'hotel pour %d francs\n", plateauMonopoly[choix].prixMaisonHotel[0] / 2);
@@ -465,6 +602,7 @@ void venteHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
             }
             else {
                 if (choix2 == 2) {
+                    //On regarde si il reste suffisamment de maison pour remplacer l'hotel par 4 maisons.
                     if (*pNombreMaisonRestante >= 4) {
                         listeJoueur[joueur].argentJoueur += plateauMonopoly[choix].prixMaisonHotel[0] / 2;
                         plateauMonopoly[choix].nombreHotel = 0;
@@ -491,6 +629,9 @@ void venteHotel(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJo
 
 }
 
+
+
+
 void hypothequeCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
     int joueur = 0, groupePropriete = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
 
@@ -505,11 +646,21 @@ void hypothequeCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur lis
 
     printf("\nVous pouvez hypothequer les cases suivantes :\n");
     for (groupePropriete = 1; groupePropriete <= 10 ; groupePropriete++) {
+
+        //Si il n'y a pas de battiment sur ce groupe de case
         if (!maisonHotelGroupe(plateauMonopoly, groupePropriete)) {
             for (numeroCase = 0; numeroCase < TAILLE_PLATEAU; numeroCase++) {
+
+                //Si cette case est à moi
                 if (plateauMonopoly[numeroCase].joueurPossesseur == joueur) {
+
+                    //Si cette case est hypothéquée
                     if (plateauMonopoly[numeroCase].hypotheque == 0) {
+
+                        //Si cette case appartient au groupe de case qui ne possède pas de battiment
                         if (plateauMonopoly[numeroCase].numeroGroupeCase == groupePropriete) {
+
+                            //Alors on peut hypothéquer cette case
                             printf("%d) %s (%d francs)\n", numeroCase, plateauMonopoly[numeroCase].nomCase, plateauMonopoly[numeroCase].prixCase / 2);
                             auMoinsUnChoix += 1;
                         }
@@ -524,6 +675,8 @@ void hypothequeCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur lis
         return;
     }
     printf("0) Retour\n");
+
+    //On selectionne quelle case on veut hypothéquer
 
     do {
         verificationSaisie(&choix);
@@ -556,6 +709,9 @@ void hypothequeCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur lis
     }
 }
 
+
+
+
 void leverHypotheque(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
     int joueur = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
 
@@ -570,7 +726,11 @@ void leverHypotheque(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur li
 
     printf("\nVous pouvez lever les hypotheques des cases suivantes :\n");
     for (numeroCase = 0; numeroCase < TAILLE_PLATEAU; numeroCase++) {
+
+        //Si cette case est hypothéquée et quelle est à moi
         if (plateauMonopoly[numeroCase].hypotheque && plateauMonopoly[numeroCase].joueurPossesseur == joueur) {
+
+            //Alors on peut lever l'hypothèque de cette case.
             printf("%d) %s (%d + %d francs)\n", numeroCase, plateauMonopoly[numeroCase].nomCase, plateauMonopoly[numeroCase].prixCase / 2, plateauMonopoly[numeroCase].prixCase / 20);
             auMoinsUnChoix += 1;
         }
@@ -582,6 +742,7 @@ void leverHypotheque(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur li
     }
     printf("0) Retour\n");
 
+    //On selectionne sur quelle case on veut lever l'hypothèque
     do {
         verificationSaisie(&choix);
         if (choix < 0 || choix > 39) {
@@ -596,6 +757,7 @@ void leverHypotheque(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur li
     if (plateauMonopoly[choix].hypotheque) {
         if (plateauMonopoly[choix].joueurPossesseur == joueur) {
             if (listeJoueur[joueur].argentJoueur >= plateauMonopoly[choix].prixCase * 11 / 20) {
+                //Pour lever l'hypothèque il faut payer la moitié + 10% de cette moitié du prix d'achat d'une case.
                 listeJoueur[joueur].argentJoueur -= plateauMonopoly[choix].prixCase * 11 / 20;
                 plateauMonopoly[choix].hypotheque = 0;
                 printf("\nVous avez leve l'hypotheque de la case %s et paye %d francs.\n", plateauMonopoly[choix].nomCase, plateauMonopoly[choix].prixCase * 11 / 20);
@@ -613,6 +775,9 @@ void leverHypotheque(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur li
     }
 }
 
+
+
+
 void venteCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR]) {
     int joueur = 0, joueur2 = 0, prix = 0, numeroCase = 0, choix = 0, auMoinsUnChoix = 0;
 
@@ -627,7 +792,11 @@ void venteCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJou
 
     printf("\nVous pouvez vendre les cases suivantes :\n");
     for (numeroCase = 0; numeroCase < TAILLE_PLATEAU; numeroCase++) {
+
+        //Si cette case est à nous et qu'elle est hypothéquée
         if (plateauMonopoly[numeroCase].hypotheque && plateauMonopoly[numeroCase].joueurPossesseur == joueur) {
+
+            //Alors on peut vendre cette case.
             printf("%d) %s\n", numeroCase, plateauMonopoly[numeroCase].nomCase);
             auMoinsUnChoix += 1;
         }
@@ -639,6 +808,7 @@ void venteCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJou
     }
     printf("0) Retour\n");
 
+    //On selectionne quelle case on veut vendre.
     do {
         verificationSaisie(&numeroCase);
         if (numeroCase < 0 || numeroCase > 39) {
@@ -716,6 +886,9 @@ void venteCase(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJou
     }
 }
 
+
+
+
 void achatCarteLibere(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int listeVariable[NOMBRE_VARIABLE], int joueur) {
     int i = 0, choix = 0, prix = 0, joueur2 = 0;
 
@@ -729,6 +902,7 @@ void achatCarteLibere(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int listeVariab
 
     verificationSaisie(&joueur2);
 
+    //Si le joueur choisi n'est pas nous et qu'il possède bien une carte de liberation de prison:
     if (listeJoueur[joueur2].carteLiberePrison >= 1 && joueur2 != joueur) {
         printf("\nEst-ce que %s veut vendre sa carte ?\n", listeJoueur[joueur2].nomJoueur);
         printf("0) Non\n");
@@ -777,10 +951,12 @@ void achatCarteLibere(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int listeVariab
     }
     else {
         if (joueur2 != 0) {
-            printf("Ce joueur ne peut pas vous vendre sa carte.\n");
+            printf("Ce joueur ne peut pas vous vendre de carte.\n");
         }
     }
 }
+
+
 
 
 int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int* pNombreMaisonRestante, int* pNombreHotelRestant) {
@@ -854,6 +1030,7 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
                             printf("Veuillez saisir une case.\n");
                         }
                     } while (choix2 < 0 || choix2 > 39);
+                    //On affiche les informations sur la case choisie
                     affichageInfoCase(choix2, plateauMonopoly);
                 }
                 if (choix2 == 2) {
@@ -864,6 +1041,7 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
                             printf("Veuillez saisir une case.\n");
                         }
                     } while (choix2 < 0 || choix2 > 39);
+                    //On affiche les prix de la case choisie
                     affichagePrixCase(choix2, plateauMonopoly);
                 }
                 if (choix2 == 3) {
@@ -874,6 +1052,7 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
                             printf("Veuillez saisir un joueur.\n");
                         }
                     } while (choix2 < 1 || choix2 > 6);
+                    //On affiche les informations du joueur choisi.
                     affichageInfoJoueur(choix2, listeJoueur);
                 }
                 if (choix2 == 4) {
@@ -884,6 +1063,7 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
                             printf("Veuillez saisir un joueur.\n");
                         }
                     } while (choix2 < 1 || choix2 > 6);
+                    //On affiche les possessions du joueur choisi.
                     affichagePossessionJoueur(choix2, plateauMonopoly);
                 }
             }
@@ -904,15 +1084,19 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
                 } while (choix2 != 0 && choix2 != 1 && choix2 != 2 && choix2 != 3 && choix2 != 4);
 
                 if (choix2 == 1) {
+                    //On achète une maison
                     achatMaison(plateauMonopoly, listeJoueur, pNombreMaisonRestante);
                 }
                 if (choix2 == 2) {
+                    //On achète un hotel
                     achatHotel(plateauMonopoly, listeJoueur, pNombreHotelRestant, pNombreMaisonRestante);
                 }
                 if (choix2 == 3) {
+                    //On vend une maison
                     venteMaison(plateauMonopoly, listeJoueur, pNombreMaisonRestante);
                 }
                 if (choix2 == 4) {
+                    //On vend un hotel
                     venteHotel(plateauMonopoly, listeJoueur, pNombreHotelRestant, pNombreMaisonRestante);
                 }
             }
@@ -931,12 +1115,15 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
                 } while (choix2 != 0 && choix2 != 1 && choix2 != 2 && choix2 != 3);
 
                 if (choix2 == 1) {
+                    //On hypotheque une case
                     hypothequeCase(plateauMonopoly, listeJoueur);
                 }
                 if (choix2 == 2) {
+                    //On leve l'hypotheque d'une case
                     leverHypotheque(plateauMonopoly, listeJoueur);
                 }
                 if (choix2 == 3) {
+                    //On vend une case hypothéquée
                     venteCase(plateauMonopoly, listeJoueur);
                 }
             }
@@ -947,35 +1134,7 @@ int checkJeu(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueu
 }
 
 
-int nombreGareJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) {
-    int i = 0, nombreGare = 0;
-    for (i = 5; i < TAILLE_PLATEAU; i += 10) {
-        if (plateauMonopoly[i].joueurPossesseur == joueur) {
-            nombreGare += 1;
-        }
-    }
-    return nombreGare;
-}
 
-int nombreMaisonJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) {
-    int i = 0, nombreMaison = 0;
-    for (i = 0; i <TAILLE_PLATEAU; i++) {
-        if (plateauMonopoly[i].joueurPossesseur == joueur) {
-            nombreMaison += plateauMonopoly[i].nombreMaison;
-        }
-    }
-    return nombreMaison;
-}
-
-int nombreHotelJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int joueur) {
-    int i = 0, nombreHotel = 0;
-    for (i = 0; i < TAILLE_PLATEAU; i++) {
-        if (plateauMonopoly[i].joueurPossesseur == joueur) {
-            nombreHotel += plateauMonopoly[i].nombreHotel;
-        }
-    }
-    return nombreHotel;
-}
 
 void failliteJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int joueur, int numeroCase, int dette, int* pNombreMaisonRestante, int* pNombreHotelRestant) {
     int choix = 0, choix2 = 0, verif = 0, numeroCase2 = 0;
@@ -1002,22 +1161,31 @@ void failliteJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur lis
                 }
             } while (choix != 0 && choix != 1);
 
+            //Si on décide d'abandonner :
             if (choix == 0) {
+
+                //Si notre dette est envers un autre joueur :
                 if (plateauMonopoly[numeroCase].joueurPossesseur != 0) {
                     for (numeroCase2 = 0; numeroCase2 < TAILLE_PLATEAU; numeroCase2++) {
                         if (plateauMonopoly[numeroCase2].joueurPossesseur == joueur) {
+
+                            //On vend les maisons de nos propriétés
                             if (plateauMonopoly[numeroCase2].nombreMaison) {
                                 listeJoueur[joueur].argentJoueur += plateauMonopoly[numeroCase2].prixMaisonHotel[0] * plateauMonopoly[numeroCase2].nombreMaison / 2;
                                 *pNombreMaisonRestante += plateauMonopoly[numeroCase2].nombreMaison;
                                 plateauMonopoly[numeroCase2].nombreMaison = 0;
                                 printf("Les maisons de la case %s ont ete vendu.\n", plateauMonopoly[numeroCase2].nomCase);
                             }
+
+                            //On vend les hotels de nos propriétés
                             if (plateauMonopoly[numeroCase2].nombreHotel) {
                                 listeJoueur[joueur].argentJoueur += plateauMonopoly[numeroCase2].prixMaisonHotel[0] * 5 / 2;
                                 plateauMonopoly[numeroCase2].nombreHotel = 0;
                                 *pNombreHotelRestant += 1;
                                 printf("L'hotel de la case %s a ete vendu.\n", plateauMonopoly[numeroCase2].nomCase);
                             }
+
+                            //On propose de lever l'hypothèque au joueur envers qui nous sommes endettés.
                             if (plateauMonopoly[numeroCase2].hypotheque) {
                                 printf("%s paye %d pour recuperer l'hypotheque de la case %s.\n", listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].nomJoueur,
                                        plateauMonopoly[numeroCase2].prixCase / 20, plateauMonopoly[numeroCase2].nomCase);
@@ -1039,36 +1207,52 @@ void failliteJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur lis
                                     }
                                 }
                             }
+
+                            //On transfert nos propriétés au joueurs envers qui nous sommes endettés
                             plateauMonopoly[numeroCase2].joueurPossesseur = plateauMonopoly[numeroCase].joueurPossesseur;
+
+                            //Si la vente des maisons et des hotels a couvert notre dette, on peut intégralement rembourser notre dette.
                             if (listeJoueur[joueur].argentJoueur >= dette) {
                                 listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur += dette;
                             }
+                            //Sinon on donne ce que l'on peut pour regler notre dette.
                             else {
                                 listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur += listeJoueur[joueur].argentJoueur;
                             }
                         }
                     }
                 }
+
+                //Si nous sommes endettés envers la banque :
                 else {
                     for (numeroCase2 = 0; numeroCase2 < TAILLE_PLATEAU; numeroCase2++) {
                         if (plateauMonopoly[numeroCase2].joueurPossesseur == joueur) {
+
+                            //On vend les maisons de nos propriétés
                             if (plateauMonopoly[numeroCase2].nombreMaison) {
                                 *pNombreMaisonRestante += plateauMonopoly[numeroCase2].nombreMaison;
                                 plateauMonopoly[numeroCase2].nombreMaison = 0;
                                 printf("Les maisons de la case %s sont remises en jeu.\n", plateauMonopoly[numeroCase2].nomCase);
                             }
+
+                            //On vend les hotels de nos propriétés
                             if (plateauMonopoly[numeroCase2].nombreHotel) {
                                 plateauMonopoly[numeroCase2].nombreHotel = 0;
                                 *pNombreHotelRestant += 1;
                                 printf("L'hotel de la case %s est remis en jeu.\n", plateauMonopoly[numeroCase2].nomCase);
                             }
+
+                            //On lève les hypothèques de chaque cases
                             if (plateauMonopoly[numeroCase2].hypotheque) {
                                 plateauMonopoly[numeroCase2].hypotheque = 0;
                             }
+
+                            //On remet toutes nos cases en jeu (le nouveau joueur possesseur devient le joueur 0)
                             plateauMonopoly[numeroCase2].joueurPossesseur = plateauMonopoly[numeroCase].joueurPossesseur;
                         }
                     }
                 }
+                //On met en faillite le joueur en actualisant son argent à -1
                 listeJoueur[joueur].argentJoueur = -1;
                 return;
             }
@@ -1076,6 +1260,7 @@ void failliteJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur lis
                 verif = 0;
             }
         }
+        //Si on peut rembourser notre dette, on la rembourse et le jeu peut reprendre.
         else {
             listeJoueur[joueur].argentJoueur -= dette;
             listeJoueur[plateauMonopoly[numeroCase].joueurPossesseur].argentJoueur += dette;
@@ -1084,10 +1269,14 @@ void failliteJoueur(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur lis
     } while (!verif);
 }
 
+
+
+
 void randomOrdreCaisseChance(int listeAleatoire[16]) {
     int nombreAleatoire = 0, i = 0;
     int liste[16] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 
+    //On remplit une liste de 16 éléments avec les entiers de 1 à 16 aléatoirement.
     for (i = 0; i < 16; i++) {
         do {
             nombreAleatoire = rand() % 16 + 1;
@@ -1098,8 +1287,12 @@ void randomOrdreCaisseChance(int listeAleatoire[16]) {
 }
 
 
+
+
 void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int nombreJoueur) {
-    if (listeJoueur[1].caseJoueur == numeroCase) {
+    //Si un joueur est sur la case "numeroCase" alors il sera affiché.
+
+    if (listeJoueur[1].caseJoueur == numeroCase && listeJoueur[1].argentJoueur != -1) {
         color(1,0);
         printf("1");
         color(7,0);
@@ -1108,7 +1301,7 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
         printf(" ");
     }
 
-    if (listeJoueur[2].caseJoueur == numeroCase) {
+    if (listeJoueur[2].caseJoueur == numeroCase && listeJoueur[2].argentJoueur != -1) {
         color(4,0);
         printf("2");
         color(7,0);
@@ -1117,7 +1310,7 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
         printf(" ");
     }
 
-    if (nombreJoueur >= 3 && listeJoueur[3].caseJoueur == numeroCase) {
+    if (nombreJoueur >= 3 && listeJoueur[3].caseJoueur == numeroCase && listeJoueur[3].argentJoueur != -1) {
         color(2,0);
         printf("3");
         color(7,0);
@@ -1126,7 +1319,7 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
         printf(" ");
     }
 
-    if (nombreJoueur >= 4 && listeJoueur[4].caseJoueur == numeroCase) {
+    if (nombreJoueur >= 4 && listeJoueur[4].caseJoueur == numeroCase && listeJoueur[4].argentJoueur != -1) {
         color(14,0);
         printf("4");
         color(7,0);
@@ -1135,7 +1328,7 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
         printf(" ");
     }
 
-    if (nombreJoueur >= 5 && listeJoueur[5].caseJoueur == numeroCase) {
+    if (nombreJoueur >= 5 && listeJoueur[5].caseJoueur == numeroCase && listeJoueur[5].argentJoueur != -1) {
         color(5,0);
         printf("5");
         color(7,0);
@@ -1144,7 +1337,7 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
         printf(" ");
     }
 
-    if (nombreJoueur >= 6 && listeJoueur[6].caseJoueur == numeroCase) {
+    if (nombreJoueur >= 6 && listeJoueur[6].caseJoueur == numeroCase && listeJoueur[6].argentJoueur != -1) {
         color(11,0);
         printf("6");
         color(7,0);
@@ -1157,8 +1350,12 @@ void posJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroCase, int no
 }
 
 
+
+
 void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur, int nombreJoueur) {
     char affichageArgent[7] = "";
+
+    //On affiche l'argent avec des epsaces en fonction de la taille qu'il faut pour l'ecrire pour garder un affichage propre.
     if (numeroJoueur <= nombreJoueur) {
         if (listeJoueur[numeroJoueur].argentJoueur < 10) {
             strcat(affichageArgent,"      ");
@@ -1189,54 +1386,76 @@ void affichageArgentJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numero
             }
         }
 
+        //On affiche le bon nombre d'espace
         printf("%s", affichageArgent);
+
+        //Puis l'argent que le joueur possède si il n'est pas en faillite. Sinon on affiche "F".
         if (listeJoueur[numeroJoueur].argentJoueur >= 0) {
             printf("%d", listeJoueur[numeroJoueur].argentJoueur);
         }
         else {
-            printf("0");
+            printf("F");
         }
+
     }
+    //On affiche rien si le joueur n'est pas en jeu.
     else {
         printf("       ");
     }
 }
 
+
+
+
 void affichageNomJoueur(InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int numeroJoueur, int nombreJoueur) {
+    int i = 0;
+    //On affiche le nom des joueurs en jeu et on ajoute des espaces pour un affichage propre selon la taille de leur nom.
     if (numeroJoueur <= nombreJoueur) {
         unsigned int longueurNom = strlen(listeJoueur[numeroJoueur].nomJoueur);
         char affichageNom[TAILLE_MAX_NOM_JOUEUR] = "";
-        for (int i = 0; i < TAILLE_MAX_NOM_JOUEUR - longueurNom - 1; i++) {
+        for (i = 0; i < TAILLE_MAX_NOM_JOUEUR - longueurNom - 1; i++) {
             strcat(affichageNom, " ");
         }
         printf("%s", listeJoueur[numeroJoueur].nomJoueur);
         printf("%s:", affichageNom);
     }
+    //On affiche rien si le joueur n'est pas en jeu.
     else {
         printf("           ");
     }
 }
 
+
+
+
 void affichageCasePropriete(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroCase) {
+    //On affiche les informations des propriétés sous chaque case en fonction de leur etat.
+
     if (plateauMonopoly[numeroCase].joueurPossesseur) {
+        //Si la propriété est hypothéquée
         if (plateauMonopoly[numeroCase].hypotheque) {
             printf("_%d__X_", plateauMonopoly[numeroCase].joueurPossesseur);
         }
         else {
+            //Si il y a des maisons dessus
             if (plateauMonopoly[numeroCase].nombreMaison) {
                 printf("_%d_%dM_", plateauMonopoly[numeroCase].joueurPossesseur, plateauMonopoly[numeroCase].nombreMaison);
             }
             else {
+                //Si il y a un hotel dessus
                 if (plateauMonopoly[numeroCase].nombreHotel) {
                     printf("_%d__H_", plateauMonopoly[numeroCase].joueurPossesseur);
                 }
+                //Si il n'y a rien de particulier
                 else {
                     printf("__%d___", plateauMonopoly[numeroCase].joueurPossesseur);
                 }
             }
         }
     }
+    //Si la propriété n'appartient à personne
     else {
+        //On affiche le prix de la case
         if (plateauMonopoly[numeroCase].prixCase < 10000) {
             printf("__%dk__", plateauMonopoly[numeroCase].prixCase / 1000);
         }
@@ -1246,43 +1465,56 @@ void affichageCasePropriete(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int nu
     }
 }
 
+
+
+
 void affichageAutreCases(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numeroCase) {
+    //On affiche les informations des gares et des compagnies de distribution des eaux et d'éléctricité en fonction de leur etat.
     color(15,0);
     if (numeroCase == 5 || numeroCase == 15 || numeroCase == 25 || numeroCase == 35) {
         if (plateauMonopoly[numeroCase].joueurPossesseur) {
+            //Si la case est hypothéquée
             if (plateauMonopoly[numeroCase].hypotheque) {
                 printf("%dGareX", plateauMonopoly[numeroCase].joueurPossesseur);
             }
+            //Sinon
             else {
                 printf("%d_Gare", plateauMonopoly[numeroCase].joueurPossesseur);
             }
         }
+        //Si la case n'appartient à personne
         else {
             printf("_Gare_");
         }
     }
     if (numeroCase == 12) {
         if (plateauMonopoly[numeroCase].joueurPossesseur) {
+            //Si la case est hypothéquée
             if (plateauMonopoly[numeroCase].hypotheque) {
                 printf("%dElecX", plateauMonopoly[numeroCase].joueurPossesseur);
             }
+            //Sinon
             else {
                 printf("%d_Elec", plateauMonopoly[numeroCase].joueurPossesseur);
             }
         }
+        //Si la case n'appartient à personne
         else {
             printf("_Elec_");
         }
     }
     if (numeroCase == 28) {
         if (plateauMonopoly[numeroCase].joueurPossesseur) {
+            //Si la case est hypothéquée
             if (plateauMonopoly[numeroCase].hypotheque) {
                 printf("%dEauxX", plateauMonopoly[numeroCase].joueurPossesseur);
             }
+            //Sinon
             else {
                 printf("%d_Eaux", plateauMonopoly[numeroCase].joueurPossesseur);
             }
         }
+        //Si la case n'appartient à personne
         else {
             printf("_Eaux_");
         }
@@ -1290,7 +1522,11 @@ void affichageAutreCases(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], int numer
     color(7,0);
 }
 
+
+
+
 void affichageMaisonHotelRestant(int nombreMaisonRestante, int nombreHotelRestant, int mode) {
+    //On affiche le nombre de maisons et d'hotels qu'il reste dans le jeu.
     if (mode == 1) {
         if (nombreMaisonRestante < 10) {
             printf(" ");
@@ -1305,7 +1541,11 @@ void affichageMaisonHotelRestant(int nombreMaisonRestante, int nombreHotelRestan
     }
 }
 
+
+
+
 void affichageRegleParc(int regleParcGratuit, int potCommun) {
+    //Si la regle du parc gratuit est activé, on affiche l'argent disponible sur la case parc gratuit.
     if (regleParcGratuit) {
         printf("Parc: %d", potCommun);
         if (potCommun < 100) {
@@ -1333,10 +1573,12 @@ void affichageRegleParc(int regleParcGratuit, int potCommun) {
 }
 
 
+
+
 void affichagePlateau(CaseMonopoly plateauMonopoly[TAILLE_PLATEAU], InfoJoueur listeJoueur[NOMBRE_MAX_JOUEUR], int variable[NOMBRE_VARIABLE]) {
+    //Grâce à toutes les fonctions d'affichage ci-dessus on affiche le plateau au complet.
 
     color(7, 0);
-
     printf("______________________________________________________________________________\n");
     printf("|");
     posJoueur(listeJoueur, 0, variable[3]);
